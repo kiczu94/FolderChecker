@@ -5,8 +5,96 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FolderChecker.View"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800">
+        Title="MainView" Height="500" Width="800">
     <Grid>
-        <ListBox x:Name="listOfRules"  Height="100" Width="700" ItemsSource="{Binding MyRulesNames}"></ListBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="133"></RowDefinition>
+            <RowDefinition Height="133"></RowDefinition>
+            <RowDefinition Height="134"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"></ColumnDefinition>
+            <ColumnDefinition Width="187"></ColumnDefinition>
+            <ColumnDefinition Width="188"></ColumnDefinition>
+            <ColumnDefinition Width="188"></ColumnDefinition>
+            <ColumnDefinition Width="187"></ColumnDefinition>
+            <ColumnDefinition Width="25"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListBox 
+            x:Name="listOfRules"  
+            Height="100" 
+            Width="375" 
+            Grid.Column="1" 
+            Grid.Row="1" 
+            Grid.ColumnSpan="3" 
+            HorizontalAlignment="Left">
+        </ListBox>
+        <ListView  
+            Margin="10" 
+            x:Name="ruleDetails" 
+            Height="225" 
+            Width="550" 
+            Grid.Column="1" 
+            Grid.Row="2" 
+            Grid.ColumnSpan="4" 
+            Grid.RowSpan="2" 
+            HorizontalAlignment="Left"
+            ItemsSource="{Binding MyRules}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True"
+                          ColumnHeaderToolTip="Szczegóły reguł">
+                    <GridViewColumn
+                        Width="50"
+                        DisplayMemberBinding="{Binding Path=myRuleName}" 
+                        Header="Nazwa">
+                    </GridViewColumn>
+                    <GridViewColumn
+                        Width="200"
+                        DisplayMemberBinding="{Binding Path=myPathToTrack}" 
+                        Header="Ścieżka">
+                    </GridViewColumn>
+                    <GridViewColumn
+                        Width="300"
+                        DisplayMemberBinding="{Binding Path=MyAdressMailstring}" 
+                        Header="Wysyłane do">
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel
+            Grid.Column="4"
+            Grid.Row="1"
+            Grid.RowSpan="2">
+            <TextBlock 
+                Margin="10"
+                Height="40"
+                Width="150"
+                Text="Reguły"
+                TextAlignment="Center" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5,0,0" 
+                />
+            <Button
+                Margin="10"
+                Grid.Column="4"
+                Grid.Row="1"
+                Height="40"
+                Width="150" 
+                Content="Dodaj..."></Button>
+            <Button
+                Margin="10"
+                Grid.Column="4"
+                Grid.Row="1"
+                Height="40"
+                Width="150" 
+                Content="Usuń..."></Button>
+            <Button
+                Margin="10"
+                Grid.Column="4"
+                Grid.Row="1"
+                Height="40"
+                Width="150"
+                Content="Edytuj..."></Button>
+        </StackPanel>
     </Grid>
 </Window>

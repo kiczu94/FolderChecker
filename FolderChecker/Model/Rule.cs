@@ -15,7 +15,7 @@ namespace FolderChecker.Model
         {
             get
             {
-                return myMailAdresses;
+                return _MailAdresses;
             }
         }
         public string myPathToTrack
@@ -41,13 +41,24 @@ namespace FolderChecker.Model
                 _ruleName = value;
             }
         }
-        public Rule(string name,string pathToTrack, List<string> mailAdresses)
+        private string _AdressMailString;
+
+        public string MyAdressMailstring
+        {
+            get
+            {
+                CreateAdressString();
+                return _AdressMailString;
+            }
+        }
+
+        public Rule(string name, string pathToTrack, List<string> mailAdresses)
         {
             _ruleName = name;
             _pathToTrack = pathToTrack;
             _MailAdresses = mailAdresses;
         }
-        public Rule(string name,string pathToTrack)
+        public Rule(string name, string pathToTrack)
         {
             _ruleName = name;
             _pathToTrack = pathToTrack;
@@ -60,5 +71,14 @@ namespace FolderChecker.Model
         {
             _MailAdresses.Add(emailAdress);
         }
+        private void CreateAdressString()
+        {
+            foreach (var adress in _MailAdresses)
+            {
+                _AdressMailString += adress;
+                _AdressMailString += " ";
+            }
+        }
+
     }
 }
