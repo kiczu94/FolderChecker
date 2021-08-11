@@ -54,6 +54,11 @@ namespace FolderChecker.ViewModel
             vs.Add("adres1");
             vs.Add("adres2");
             vs.Add("adres3");
+            vs.Add("adres4");
+            vs.Add("adres5");
+            vs.Add("adres6");
+            vs.Add("adres7");
+            vs.Add("adres8");
             return vs;
         }
         private List<string> GetRuleNames()

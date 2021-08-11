@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FolderChecker.View"
         mc:Ignorable="d"
-        Title="MainView" Height="500" Width="800">
+        Title="MainView" Height="500" Width="800"
+        >
+    <Window.Resources>
+        <DataTemplate x:Key="WrapCell">
+            <TextBlock TextWrapping="WrapWithOverflow"></TextBlock>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"></RowDefinition>
@@ -22,26 +28,26 @@
             <ColumnDefinition Width="187"></ColumnDefinition>
             <ColumnDefinition Width="25"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <ListBox 
-            x:Name="listOfRules"  
-            Height="100" 
-            Width="375" 
-            Grid.Column="1" 
-            Grid.Row="1" 
-            Grid.ColumnSpan="3" 
-            HorizontalAlignment="Left">
-        </ListBox>
+        <TextBlock></TextBlock>
         <ListView  
             Margin="10" 
             x:Name="ruleDetails" 
-            Height="225" 
+            Height="325" 
             Width="550" 
             Grid.Column="1" 
-            Grid.Row="2" 
+            Grid.Row="1" 
             Grid.ColumnSpan="4" 
-            Grid.RowSpan="2" 
+            Grid.RowSpan="3" 
             HorizontalAlignment="Left"
-            ItemsSource="{Binding MyRules}">
+            ItemsSource="{Binding MyRules}" 
+            HorizontalContentAlignment="Center"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="20"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView AllowsColumnReorder="True"
                           ColumnHeaderToolTip="Szczegóły reguł">
@@ -56,9 +62,13 @@
                         Header="Ścieżka">
                     </GridViewColumn>
                     <GridViewColumn
-                        Width="300"
-                        DisplayMemberBinding="{Binding Path=MyAdressMailstring}" 
-                        Header="Wysyłane do">
+                        Header="Wysyłane do"
+                        Width="300">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" Text="{Binding Path=MyAdressMailstring}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
@@ -98,3 +108,4 @@
         </StackPanel>
     </Grid>
 </Window>
+
