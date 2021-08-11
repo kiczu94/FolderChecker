@@ -24,5 +24,11 @@ namespace FolderChecker.View
             InitializeComponent();
             DataContext = new ViewModel.MainViewModel();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AddRuleWindow addRuleWindow = new AddRuleWindow();
+            addRuleWindow.ShowDialog();
+        }
     }
 }

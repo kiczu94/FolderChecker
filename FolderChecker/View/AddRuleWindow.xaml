@@ -1,0 +1,31 @@
+﻿<Window x:Class="FolderChecker.View.AddRuleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FolderChecker.View"
+        mc:Ignorable="d"
+        Title="AddRuleWindow" Height="300" Width="600">
+    <StackPanel>
+        <WrapPanel
+            Margin="10">
+            <TextBlock 
+                Text="Nazwa reguły:"></TextBlock>
+            <TextBox 
+                Margin="10,0,0,0" 
+                Width="100"></TextBox>
+        </WrapPanel>
+        <WrapPanel 
+            Margin="10,0,0,0">
+            <TextBlock 
+                Text="Ścieżka"></TextBlock>
+            <Button 
+                x:Name="browse_button" 
+                Margin="10,0,0,0" 
+                Width="70" 
+                VerticalContentAlignment="Center" 
+                Content="Przeglądaj..." Click="Browse_button_Click"></Button>
+            <TextBox x:Name="textbox1"></TextBox>
+        </WrapPanel>
+    </StackPanel>
+</Window>
