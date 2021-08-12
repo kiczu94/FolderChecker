@@ -65,6 +65,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Rule.cs" />
+    <Compile Include="ViewModel\AddRuleWindowViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\AddRuleWindow.xaml.cs">
       <DependentUpon>AddRuleWindow.xaml</DependentUpon>

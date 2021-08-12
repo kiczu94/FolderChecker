@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.Win32;
 
 namespace FolderChecker.View
 {
@@ -21,50 +22,33 @@ namespace FolderChecker.View
     /// </summary>
     public partial class AddRuleWindow : Window
     {
+        ViewModel.AddRuleWindowViewModel addNewRule = new ViewModel.AddRuleWindowViewModel();
         public AddRuleWindow()
         {
             InitializeComponent();
+            DataContext = addNewRule;
         }
 
-        private void Browse_button_Click(object sender, RoutedEventArgs e)
-        { /*
-            // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.ValidateNames = false;
-            dlg.CheckFileExists = false;
-            dlg.CheckPathExists = true;
-            dlg.FileName = "Select folder";
-
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
-
-
-            // Get the selected file name and display in a TextBox 
-            if (result == true)
-            {
-                // Open document 
-                string filename = dlg.FileName;
-                string extension = System.IO.Path.GetExtension(filename);
-                if (extension == "")
-                {
-                    textbox1.Text = System.IO.Path.GetDirectoryName(dlg.FileName);
-                }
-                else
-                {
-                    textbox1.Text = filename;
-                }
-                
-            }
-            */
+        private void Folder_button_Click(object sender, RoutedEventArgs e)
+        {
             var dialog = new CommonOpenFileDialog()
             {
-                IsFolderPicker=true,
-                Title="Select folder..."
+                IsFolderPicker = true,
+                Title = "Select folder..."
             };
-            if (dialog.ShowDialog()==CommonFileDialogResult.Ok)
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                textbox1.Text = dialog.FileName;
+                addNewRule.MyNewRulePath = dialog.FileName;
+            }
+        }
+
+        private void File_button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                addNewRule.MyNewRulePath = openFileDialog.FileName;
             }
         }
     }

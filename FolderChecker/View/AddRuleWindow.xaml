@@ -6,26 +6,55 @@
         xmlns:local="clr-namespace:FolderChecker.View"
         mc:Ignorable="d"
         Title="AddRuleWindow" Height="300" Width="600">
-    <StackPanel>
-        <WrapPanel
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="190"></ColumnDefinition>
+            <ColumnDefinition Width="190"></ColumnDefinition>
+            <ColumnDefinition Width="190"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="90"></RowDefinition>
+            <RowDefinition Height="90"></RowDefinition>
+            <RowDefinition Height="90"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <WrapPanel
             Margin="10">
-            <TextBlock 
+                <TextBlock 
                 Text="Nazwa reguły:"></TextBlock>
-            <TextBox 
+                <TextBox 
                 Margin="10,0,0,0" 
-                Width="100"></TextBox>
-        </WrapPanel>
-        <WrapPanel 
+                Width="90" 
+                Text="{Binding Path=MyRuleName}"></TextBox>
+            </WrapPanel>
+            <WrapPanel 
             Margin="10,0,0,0">
-            <TextBlock 
-                Text="Ścieżka"></TextBlock>
-            <Button 
-                x:Name="browse_button" 
-                Margin="10,0,0,0" 
-                Width="70" 
-                VerticalContentAlignment="Center" 
-                Content="Przeglądaj..." Click="Browse_button_Click"></Button>
-            <TextBox x:Name="textbox1"></TextBox>
-        </WrapPanel>
-    </StackPanel>
+                <TextBlock 
+                Text="Ścieżka "></TextBlock>
+                <Button
+                    x:Name="folder_button" 
+                    Width="60" 
+                    Content="Folder..."
+                    Margin="10,0,0,0" Click="Folder_button_Click">
+                </Button>
+                <Button
+                    x:Name="file_button" 
+                    Width="60" 
+                    Content="Plik..."
+                    Margin="10,0,0,0" Click="File_button_Click">
+                </Button>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <TextBlock 
+                Text="Adres email: "
+                ></TextBlock>
+                <Button x:Name="AddMail">Dodaj nowy</Button>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+
 </Window>
