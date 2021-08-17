@@ -52,7 +52,7 @@
                 <TextBlock 
                 Text="Adres email: "
                 ></TextBlock>
-                <Button x:Name="AddMail">Dodaj nowy</Button>
+                <Button x:Name="AddMail" Click="AddMail_Click">Dodaj nowy</Button>
             </WrapPanel>
         </StackPanel>
     </Grid>

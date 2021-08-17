@@ -60,8 +60,7 @@ namespace FolderChecker.ViewModel
         }
         protected virtual void OnCollectionChange(NotifyCollectionChangedEventArgs e)
         {
-            if (CollectionChanged != null)
-                CollectionChanged(this, e);
+            CollectionChanged?.Invoke(this, e);
         }
     }
 }

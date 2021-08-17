@@ -65,8 +65,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Rule.cs" />
+    <Compile Include="ViewModel\AddEmailAdressViewModel.cs" />
     <Compile Include="ViewModel\AddRuleWindowViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\AddEmailAdressWindow.xaml.cs">
+      <DependentUpon>AddEmailAdressWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddRuleWindow.xaml.cs">
       <DependentUpon>AddRuleWindow.xaml</DependentUpon>
     </Compile>
@@ -77,6 +81,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AddEmailAdressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddRuleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

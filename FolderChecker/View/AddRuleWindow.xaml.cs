@@ -51,5 +51,11 @@ namespace FolderChecker.View
                 addNewRule.MyNewRulePath = openFileDialog.FileName;
             }
         }
+
+        private void AddMail_Click(object sender, RoutedEventArgs e)
+        {
+            AddEmailAdressWindow emailAdressWindow = new AddEmailAdressWindow();
+            emailAdressWindow.ShowDialog();
+        }
     }
 }

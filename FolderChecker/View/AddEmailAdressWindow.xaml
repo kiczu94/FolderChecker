@@ -1,0 +1,48 @@
+﻿<Window x:Class="FolderChecker.View.AddEmailAdressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FolderChecker.View"
+        mc:Ignorable="d"
+        Title="AddEmailAdressWindow" Height="300" Width="600">
+    <StackPanel>
+        <WrapPanel>
+            <TextBlock
+                Margin="10,10,0,0"
+                Text="Wprowadź adres e-mail"></TextBlock>
+            <TextBox 
+            HorizontalAlignment="Left"
+            Margin="10,10,0,0"
+            x:Name="EmailAdress"
+            Height="20" 
+            Width="200"
+                Text="{Binding MyEmailString}"></TextBox>
+            <Button
+                Margin="10,10,0,0"
+                x:Name="AddEmail"
+                Height="20"
+                Width="75"
+                Content="Dodaj" Click="AddEmail_Click"></Button>
+        </WrapPanel>
+        <ListView
+            x:Name="MailList"
+            Margin="10,10,0,0"
+            Height="175" 
+            Width="500" 
+            HorizontalAlignment="Left"
+            ItemsSource="{Binding MyMailAdressesCollection}" 
+            HorizontalContentAlignment="Center"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True"
+                          ColumnHeaderToolTip="Szczegóły reguł">
+                    <GridViewColumn
+                        Width="50"
+                        Header="Nazwa">
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </StackPanel>
+</Window>
