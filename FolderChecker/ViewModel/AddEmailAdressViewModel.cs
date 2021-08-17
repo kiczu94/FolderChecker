@@ -17,10 +17,22 @@ namespace FolderChecker.ViewModel
         public ObservableCollection<string> MyMailAdressesCollection
         {
             get { return _mailAdressesCollection; }
-            set { _mailAdressesCollection = value; }
-        }
+            set
+            {
+                if (value.GetType()==typeof(List<string>))
+                {
+                    foreach (var item in value)
+                    {
+                        MyMailAdressesCollection.Add(item);
+                    }
+                }
+                else
+                {
+                    _mailAdressesCollection = value;
+                }
 
-        ObservableCollection<string> _mailAdressCollection = new ObservableCollection<string>();
+            }
+        }
         private string _emailAdress;
         public string MyEmailString
         {
@@ -47,7 +59,17 @@ namespace FolderChecker.ViewModel
 
         public void AddEmail()
         {
-            MyMailAdressesCollection.Add(MyEmailString);
+            if (MyEmailString!=String.Empty)
+            {
+                MyMailAdressesCollection.Add(MyEmailString);
+                MyEmailString = String.Empty;
+            }
+
         }
+        public List<string> exportEmailAdresses()
+        {
+            return MyMailAdressesCollection.ToList();
+        }
+
     }
 }

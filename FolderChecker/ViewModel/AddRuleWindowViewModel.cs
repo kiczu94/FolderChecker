@@ -1,66 +1,99 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.Win32;
-using System.Collections.Specialized;
+using FolderChecker.View;
+using System.Collections.ObjectModel;
 
 namespace FolderChecker.ViewModel
 {
-    public class AddRuleWindowViewModel : INotifyPropertyChanged, INotifyCollectionChanged
+    public class AddRuleWindowViewModel : INotifyPropertyChanged
     {
-        private string _newRuleName = string.Empty;
+        private Model.Rule _workingRule;
+
         private string _rulePath;
-        private List<string> _newRuleEmailAdresses;
-        public string MyRuleName
+
+        public string MyRulePath
         {
-            get
-            {
-                return _newRuleName;
-            }
-            set
-            {
-                _newRuleName = value;
-                OnPropertyChanged();
-            }
-        }
-        public string MyNewRulePath
-        {
-            get
-            {
-                return _rulePath;
-            }
+            get { return _rulePath; }
             set
             {
                 _rulePath = value;
                 OnPropertyChanged();
             }
         }
-        public List<string> MyNewRuleEmailAdresses
-        {
-            get { return _newRuleEmailAdresses; }
-            set { _newRuleEmailAdresses = value;
-                OnPropertyChanged();
-            }
-        }
-        public AddRuleWindowViewModel()
-        {
+        private List<string> _emailAdresses;
 
+        public List<string> MyEmailAdresses
+        {
+            get { return _emailAdresses; }
+            set { _emailAdresses = value; }
+        }
+        private ObservableCollection<string> _emailAdressesCollection;
+
+        public ObservableCollection<string> MyEmailAdressesCollection
+        {
+            get { return _emailAdressesCollection; }
+            set { _emailAdressesCollection = value; }
+        }
+
+        public AddRuleWindowViewModel(Model.Rule rule)
+        {
+            _workingRule = rule;
+            MyEmailAdresses = new List<string>();
+            MyEmailAdressesCollection = new ObservableCollection<string>();
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        protected virtual void OnCollectionChange(NotifyCollectionChangedEventArgs e)
+
+        public void ChooseFolder()
         {
-            CollectionChanged?.Invoke(this, e);
+            var dialog = new CommonOpenFileDialog()
+            {
+                IsFolderPicker = true,
+                Title = "Select folder..."
+            };
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                _workingRule.myPathToTrack = dialog.FileName;
+                MyRulePath = dialog.FileName;
+            }
+        }
+        public void ChooseFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                _workingRule.myPathToTrack = openFileDialog.FileName;
+                MyRulePath = openFileDialog.FileName;
+            }
+        }
+        public void AddMail()
+        {
+            AddEmailAdressWindow emailAdressWindow = new AddEmailAdressWindow();
+            emailAdressWindow.ShowDialog();
+            foreach (var mail in emailAdressWindow.Export())
+            {
+                MyEmailAdresses.Add(mail);
+            }
+            MyEmailAdressesCollection = ConverseCollection(MyEmailAdresses);
+            OnPropertyChanged("MyEmailAdressesCollection");
+        }
+        private ObservableCollection<string> ConverseCollection(List<string> listToConverse)
+        {
+            ObservableCollection<string> collection = new ObservableCollection<string>();
+            foreach (var item in listToConverse)
+            {
+                collection.Add(item);
+            }
+            return collection;
         }
     }
 }

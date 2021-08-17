@@ -19,16 +19,35 @@ namespace FolderChecker.View
     /// </summary>
     public partial class MainView : Window
     {
+        private List<Model.Rule> mainListOfRules = new List<Model.Rule>();
         public MainView()
         {
             InitializeComponent();
-            DataContext = new ViewModel.MainViewModel();
+            mainListOfRules = PopulateList();
+            DataContext = new ViewModel.MainViewModel(mainListOfRules);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             AddRuleWindow addRuleWindow = new AddRuleWindow();
             addRuleWindow.ShowDialog();
+        }
+        private List<Model.Rule> PopulateList()
+        {
+            List<Model.Rule> rules = new List<Model.Rule>();
+            for (int i = 0; i < 10; i++)
+            {
+                string rulename = $"zasada " + (i+1);
+                string path = $"ścieżka " + (i + 1);
+                List<string> adressList = new List<string>();
+                for (int j = 0; j < 3; j++)
+                {
+                    adressList.Add($"adres " + (j + 1));
+                }
+                Model.Rule rule = new Model.Rule(rulename, path, adressList);
+                rules.Add(rule);
+            }
+            return rules;
         }
     }
 }

@@ -30,5 +30,15 @@ namespace FolderChecker.View
         {
             addEmailAdress.AddEmail();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {            
+            this.Close();
+        }
+        public List<string> Export ()
+        {
+            return addEmailAdress.exportEmailAdresses();
+        }
+
     }
 }

@@ -22,40 +22,27 @@ namespace FolderChecker.View
     /// </summary>
     public partial class AddRuleWindow : Window
     {
-        ViewModel.AddRuleWindowViewModel addNewRule = new ViewModel.AddRuleWindowViewModel();
+        private ViewModel.AddRuleWindowViewModel AddRuleWindowViewModel = new ViewModel.AddRuleWindowViewModel(new Model.Rule());
         public AddRuleWindow()
         {
             InitializeComponent();
-            DataContext = addNewRule;
+            DataContext = AddRuleWindowViewModel; 
         }
-
+        
         private void Folder_button_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new CommonOpenFileDialog()
-            {
-                IsFolderPicker = true,
-                Title = "Select folder..."
-            };
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                addNewRule.MyNewRulePath = dialog.FileName;
-            }
+            AddRuleWindowViewModel.ChooseFolder();   
         }
 
         private void File_button_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                addNewRule.MyNewRulePath = openFileDialog.FileName;
-            }
+            AddRuleWindowViewModel.ChooseFile();
         }
-
+        
         private void AddMail_Click(object sender, RoutedEventArgs e)
         {
-            AddEmailAdressWindow emailAdressWindow = new AddEmailAdressWindow();
-            emailAdressWindow.ShowDialog();
+            AddRuleWindowViewModel.AddMail();
+           
         }
     }
 }

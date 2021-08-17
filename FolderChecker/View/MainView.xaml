@@ -39,7 +39,7 @@
             Grid.ColumnSpan="4" 
             Grid.RowSpan="3" 
             HorizontalAlignment="Left"
-            ItemsSource="{Binding MyRules}" 
+            ItemsSource="{Binding MyRulesCollection}" 
             HorizontalContentAlignment="Center"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             >

@@ -55,6 +55,36 @@
                 <Button x:Name="AddMail" Click="AddMail_Click">Dodaj nowy</Button>
             </WrapPanel>
         </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Grid.RowSpan="2">
+            <WrapPanel>
+                <TextBlock>Ścieżka</TextBlock>
+                <TextBlock Text="{Binding MyRulePath}"></TextBlock>
+            </WrapPanel>
+            <ListView  
+            x:Name="Details" 
+            Height="100" 
+            Width="580"  
+            HorizontalAlignment="Left"
+            ItemsSource="{Binding MyEmailAdressesCollection}" 
+            HorizontalContentAlignment="Center"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Height" Value="20"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True"
+                          ColumnHeaderToolTip="Szczegóły reguł">
+                        <GridViewColumn
+                        Width="300" 
+                        Header="Email">
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
     </Grid>
 
 </Window>
