@@ -17,6 +17,7 @@ namespace FolderChecker.Model
             {
                 return _MailAdresses;
             }
+            set { _MailAdresses = value; }
         }
         public string myPathToTrack
         {

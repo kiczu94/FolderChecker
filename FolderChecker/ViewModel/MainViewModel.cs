@@ -16,15 +16,13 @@ namespace FolderChecker.ViewModel
         public ObservableCollection<Model.Rule> MyRulesCollection
         {
             get { return _rulesCollection; }
-            set { _rulesCollection = value; }
+            set { _rulesCollection = value;
+                OnPropertyChanged();
+            }
         }
-        public MainViewModel(List<Model.Rule> rules)
+        public MainViewModel()
         {
             MyRulesCollection = new ObservableCollection<Model.Rule>();
-            foreach (var rule in rules)
-            {
-                MyRulesCollection.Add(rule);
-            }
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

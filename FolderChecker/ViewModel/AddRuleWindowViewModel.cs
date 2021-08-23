@@ -12,9 +12,23 @@ namespace FolderChecker.ViewModel
     public class AddRuleWindowViewModel : INotifyPropertyChanged
     {
         private Model.Rule _workingRule;
-
         private string _rulePath;
+        private ObservableCollection<string> _emailAdressesCollection;
+        private List<string> _emailAdresses;
+        private string _ruleName;
 
+        public string MyRuleName
+        {
+            get { return _ruleName; }
+            set { _ruleName = value; }
+        }
+
+
+        public List<string> MyEmailAdresses
+        {
+            get { return _emailAdresses; }
+            set { _emailAdresses = value; }
+        }
         public string MyRulePath
         {
             get { return _rulePath; }
@@ -24,24 +38,19 @@ namespace FolderChecker.ViewModel
                 OnPropertyChanged();
             }
         }
-        private List<string> _emailAdresses;
-
-        public List<string> MyEmailAdresses
-        {
-            get { return _emailAdresses; }
-            set { _emailAdresses = value; }
-        }
-        private ObservableCollection<string> _emailAdressesCollection;
-
         public ObservableCollection<string> MyEmailAdressesCollection
         {
             get { return _emailAdressesCollection; }
             set { _emailAdressesCollection = value; }
         }
-
-        public AddRuleWindowViewModel(Model.Rule rule)
+        public Model.Rule MyWorkingRule
         {
-            _workingRule = rule;
+            get { return _workingRule; }
+            set { _workingRule = value; }
+        }
+        public AddRuleWindowViewModel()
+        {
+            MyWorkingRule = new Model.Rule();
             MyEmailAdresses = new List<string>();
             MyEmailAdressesCollection = new ObservableCollection<string>();
         }
@@ -85,6 +94,12 @@ namespace FolderChecker.ViewModel
             }
             MyEmailAdressesCollection = ConverseCollection(MyEmailAdresses);
             OnPropertyChanged("MyEmailAdressesCollection");
+        }
+        public void AddRule()
+        {
+            _workingRule.myMailAdresses = MyEmailAdresses;
+            _workingRule.myRuleName = MyRuleName;
+            _workingRule.myPathToTrack = MyRulePath;
         }
         private ObservableCollection<string> ConverseCollection(List<string> listToConverse)
         {

@@ -85,6 +85,7 @@
                 </ListView.View>
             </ListView>
         </StackPanel>
+        <Button x:Name="AddNewRule" Margin="10" Grid.Column="3" Grid.Row="3" Width="75" Height="20" Content="Dodaj regułę" Click="AddNewRule_Click"></Button>
     </Grid>
 
 </Window>

@@ -22,7 +22,7 @@ namespace FolderChecker.View
     /// </summary>
     public partial class AddRuleWindow : Window
     {
-        private ViewModel.AddRuleWindowViewModel AddRuleWindowViewModel = new ViewModel.AddRuleWindowViewModel(new Model.Rule());
+        private ViewModel.AddRuleWindowViewModel AddRuleWindowViewModel = new ViewModel.AddRuleWindowViewModel();
         public AddRuleWindow()
         {
             InitializeComponent();
@@ -43,6 +43,16 @@ namespace FolderChecker.View
         {
             AddRuleWindowViewModel.AddMail();
            
+        }
+
+        private void AddNewRule_Click(object sender, RoutedEventArgs e)
+        {
+            AddRuleWindowViewModel.AddRule();
+            this.Close();
+        }
+        public Model.Rule GetRule()
+        {
+            return AddRuleWindowViewModel.MyWorkingRule;
         }
     }
 }
