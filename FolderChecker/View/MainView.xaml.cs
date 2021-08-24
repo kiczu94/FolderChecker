@@ -26,29 +26,21 @@ namespace FolderChecker.View
             DataContext = mainViewModel;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             AddRuleWindow addRuleWindow = new AddRuleWindow();
             addRuleWindow.ShowDialog();
-            mainViewModel.MyRulesCollection.Add(addRuleWindow.GetRule());
-
+            mainViewModel.AddRule(addRuleWindow.GetRule());
         }
-        private List<Model.Rule> PopulateList()
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Model.Rule> rules = new List<Model.Rule>();
-            for (int i = 0; i < 10; i++)
-            {
-                string rulename = $"zasada " + (i+1);
-                string path = $"ścieżka " + (i + 1);
-                List<string> adressList = new List<string>();
-                for (int j = 0; j < 3; j++)
-                {
-                    adressList.Add($"adres " + (j + 1));
-                }
-                Model.Rule rule = new Model.Rule(rulename, path, adressList);
-                rules.Add(rule);
-            }
-            return rules;
+            mainViewModel.DeleteRule(ruleDetails.SelectedItem);
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

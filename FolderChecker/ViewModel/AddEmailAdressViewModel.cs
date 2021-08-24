@@ -13,26 +13,6 @@ namespace FolderChecker.ViewModel
     public class AddEmailAdressViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<string> _mailAdressesCollection;
-
-        public ObservableCollection<string> MyMailAdressesCollection
-        {
-            get { return _mailAdressesCollection; }
-            set
-            {
-                if (value.GetType()==typeof(List<string>))
-                {
-                    foreach (var item in value)
-                    {
-                        MyMailAdressesCollection.Add(item);
-                    }
-                }
-                else
-                {
-                    _mailAdressesCollection = value;
-                }
-
-            }
-        }
         private string _emailAdress;
         public string MyEmailString
         {
@@ -46,8 +26,26 @@ namespace FolderChecker.ViewModel
                 OnPropertyChanged();
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ObservableCollection<string> MyMailAdressesCollection
+        {
+            get { return _mailAdressesCollection; }
+            set
+            {
+                if (value.GetType() == typeof(List<string>))
+                {
+                    foreach (var item in value)
+                    {
+                        MyMailAdressesCollection.Add(item);
+                    }
+                }
+                else
+                {
+                    _mailAdressesCollection = value;
+                }
 
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
         public AddEmailAdressViewModel()
         {
             MyMailAdressesCollection = new ObservableCollection<string>();
@@ -56,7 +54,6 @@ namespace FolderChecker.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         public void AddEmail()
         {
             if (MyEmailString!=String.Empty)
@@ -70,6 +67,5 @@ namespace FolderChecker.ViewModel
         {
             return MyMailAdressesCollection.ToList();
         }
-
     }
 }

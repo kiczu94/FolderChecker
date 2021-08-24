@@ -16,14 +16,11 @@ namespace FolderChecker.ViewModel
         private ObservableCollection<string> _emailAdressesCollection;
         private List<string> _emailAdresses;
         private string _ruleName;
-
         public string MyRuleName
         {
             get { return _ruleName; }
             set { _ruleName = value; }
         }
-
-
         public List<string> MyEmailAdresses
         {
             get { return _emailAdresses; }
@@ -55,12 +52,10 @@ namespace FolderChecker.ViewModel
             MyEmailAdressesCollection = new ObservableCollection<string>();
         }
         public event PropertyChangedEventHandler PropertyChanged;
-
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         public void ChooseFolder()
         {
             var dialog = new CommonOpenFileDialog()

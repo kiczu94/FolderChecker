@@ -43,7 +43,6 @@ namespace FolderChecker.Model
             }
         }
         private string _AdressMailString;
-
         public string MyAdressMailstring
         {
             get
@@ -52,7 +51,6 @@ namespace FolderChecker.Model
                 return _AdressMailString;
             }
         }
-
         public Rule(string name, string pathToTrack, List<string> mailAdresses)
         {
             _ruleName = name;
@@ -80,6 +78,5 @@ namespace FolderChecker.Model
                 _AdressMailString += " ";
             }
         }
-
     }
 }
