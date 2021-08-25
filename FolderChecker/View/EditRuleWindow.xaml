@@ -36,7 +36,7 @@
                     Margin="10,0,0,0" 
                     x:Name="RuleName" 
                     Width="200"
-                    Text="{Binding Path= MyRuleToEdit.myRuleName}"
+                    Text="{Binding Path= MyRuleName}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"></TextBlock>
             </WrapPanel>
@@ -72,19 +72,19 @@
             Content="Edytuj nazwę" 
             x:Name="EditNameButton"
             VerticalAlignment="Top"
-            HorizontalAlignment="Center">
+            HorizontalAlignment="Center" Click="EditNameButton_Click">
             </Button>
             <WrapPanel Height="20" HorizontalAlignment="Center">
                 <Button 
                     x:Name="ChooseFolder" 
                     Width="70" Height="20" 
-                    Content="Folder.."></Button>
+                    Content="Folder.." Click="ChooseFolder_Click"></Button>
                 <Button 
                     x:Name="ChooseFile" 
                     Width="70" 
                     Height="20" 
                     Content="Plik..." 
-                    Margin="10,0,0,0"></Button>
+                    Margin="10,0,0,0" Click="ChooseFile_Click"></Button>
             </WrapPanel>
             <Button 
                 Margin="10"
@@ -93,7 +93,7 @@
             Height="20" 
             Width="70"
             Content="Edytuj email" 
-            x:Name="EditButton" >
+            x:Name="EditButton" Click="EditButton_Click" >
             </Button>
         </StackPanel>
 

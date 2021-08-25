@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace FolderChecker.View
 {
@@ -28,9 +16,7 @@ namespace FolderChecker.View
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            AddRuleWindow addRuleWindow = new AddRuleWindow();
-            addRuleWindow.ShowDialog();
-            mainViewModel.AddRule(addRuleWindow.GetRule());
+            mainViewModel.AddRule();
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -40,16 +26,8 @@ namespace FolderChecker.View
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ruleDetails.SelectedItems.Count!=0)
-            {
-                foreach (object item in ruleDetails.SelectedItems)
-                {
-                    EditRuleWindow editRuleWindow = new EditRuleWindow((Model.Rule)item);
-                    editRuleWindow.ShowDialog();
-                }
 
-            }
-
+            mainViewModel.EditRule(ruleDetails.SelectedItems);
         }
     }
 }

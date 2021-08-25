@@ -73,6 +73,7 @@
     <Compile Include="ViewModel\AddEmailAdressViewModel.cs" />
     <Compile Include="ViewModel\AddRuleWindowViewModel.cs" />
     <Compile Include="ViewModel\EditRuleWindowViewModel.cs" />
+    <Compile Include="ViewModel\EditSimpleTextViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\AddEmailAdressWindow.xaml.cs">
       <DependentUpon>AddEmailAdressWindow.xaml</DependentUpon>
@@ -82,6 +83,9 @@
     </Compile>
     <Compile Include="View\EditRuleWindow.xaml.cs">
       <DependentUpon>EditRuleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditSimpleTextWindow.xaml.cs">
+      <DependentUpon>EditSimpleTextWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -99,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditRuleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditSimpleTextWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

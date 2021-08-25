@@ -22,13 +22,31 @@ namespace FolderChecker.View
     /// </summary>
     public partial class EditRuleWindow : Window
     {
+        public EditRuleWindowViewModel editRuleWindowViewModel = new EditRuleWindowViewModel();
         public EditRuleWindow(Rule editableRule)
         {
-            EditRuleWindowViewModel editRuleWindowViewModel = new EditRuleWindowViewModel( editableRule);
+            editRuleWindowViewModel.MyRuleToEdit = editableRule;
             InitializeComponent();
             DataContext = editRuleWindowViewModel;
         }
+        private void EditNameButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowa nazwa reguły",editRuleWindowViewModel.MyRuleName);
+            editSimpleText.ShowDialog();
+            editRuleWindowViewModel.MyRuleName=editSimpleText.GetName();
+        }
+        private void ChooseFolder_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+        private void ChooseFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void AcceptEdition_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
