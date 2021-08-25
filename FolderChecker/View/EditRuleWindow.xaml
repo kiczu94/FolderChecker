@@ -1,0 +1,114 @@
+﻿<Window x:Class="FolderChecker.View.EditRuleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FolderChecker.View"
+        mc:Ignorable="d"
+        Title="EditRuleWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel 
+            Grid.Column="1" 
+            Grid.Row="1" 
+            Grid.ColumnSpan="2" 
+            Grid.RowSpan="3">
+            <WrapPanel 
+                Margin="10" >
+                <TextBlock  
+                    Text="Nazwa reguły" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"></TextBlock>
+                <TextBlock 
+                    Margin="10,0,0,0" 
+                    x:Name="RuleName" 
+                    Width="200"
+                    Text="{Binding Path= MyRuleToEdit.myRuleName}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"></TextBlock>
+            </WrapPanel>
+            <WrapPanel 
+                Margin="10,0,0,0">
+                <TextBlock 
+                    Text="Ścieżka "></TextBlock>
+                <TextBlock 
+                    x:Name="Path" 
+                    Width="400"
+                    Text="{Binding Path= MyRuleToEdit.myPathToTrack}"
+                    TextWrapping="WrapWithOverflow"></TextBlock>
+            </WrapPanel>
+            <ListBox 
+                Margin="10"
+                x:Name="RuleListBox"
+                ItemsSource="{Binding MyRuleToEdit.myMailAdresses}"
+                Height="250">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <StackPanel Grid.Column="3" Grid.Row="1">
+            <Button  
+            Margin="10"
+            Grid.Column="3" 
+            Grid.Row="1" 
+            Height="20" 
+            Width="90"
+            Content="Edytuj nazwę" 
+            x:Name="EditNameButton"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center">
+            </Button>
+            <WrapPanel Height="20" HorizontalAlignment="Center">
+                <Button 
+                    x:Name="ChooseFolder" 
+                    Width="70" Height="20" 
+                    Content="Folder.."></Button>
+                <Button 
+                    x:Name="ChooseFile" 
+                    Width="70" 
+                    Height="20" 
+                    Content="Plik..." 
+                    Margin="10,0,0,0"></Button>
+            </WrapPanel>
+            <Button 
+                Margin="10"
+            Grid.Column="3" 
+            Grid.Row="2" 
+            Height="20" 
+            Width="70"
+            Content="Edytuj email" 
+            x:Name="EditButton" >
+            </Button>
+        </StackPanel>
+
+
+        <Button
+            x:Name="AcceptEdition"
+            Grid.Column="3" 
+            Grid.Row="3" 
+            HorizontalAlignment="Right" 
+            Height="20" 
+            Width="70" 
+            VerticalAlignment="Bottom" 
+            Content="Akceptuj" 
+            Click="AcceptEdition_Click" 
+            Margin="0,0,81,10"></Button>
+
+    </Grid>
+</Window>

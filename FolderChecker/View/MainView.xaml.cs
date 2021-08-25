@@ -40,6 +40,15 @@ namespace FolderChecker.View
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            if (ruleDetails.SelectedItems.Count!=0)
+            {
+                foreach (object item in ruleDetails.SelectedItems)
+                {
+                    EditRuleWindow editRuleWindow = new EditRuleWindow((Model.Rule)item);
+                    editRuleWindow.ShowDialog();
+                }
+
+            }
 
         }
     }

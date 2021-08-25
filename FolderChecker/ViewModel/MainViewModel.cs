@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -23,7 +24,14 @@ namespace FolderChecker.ViewModel
         }
         public MainViewModel()
         {
-            MyRulesCollection = JSONoperations.loadRules();
+            if (File.Exists(@"C:\Users\tomasz.tkocz\Desktop\ghghg\rule.json"))
+            {
+                MyRulesCollection = JSONoperations.loadRules();
+            }
+            else
+            {
+                MyRulesCollection = new ObservableCollection<Rule>();
+            }
             RuleAdded += JSONoperations.onRuleAdded;
             RuleDeleted += JSONoperations.onRuleDeleted;
         }
