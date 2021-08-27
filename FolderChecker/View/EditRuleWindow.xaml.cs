@@ -28,24 +28,23 @@ namespace FolderChecker.View
             editRuleWindowViewModel.MyRuleToEdit = editableRule;
             InitializeComponent();
             DataContext = editRuleWindowViewModel;
+            this.Closed += editRuleWindowViewModel.onClosed;
         }
         private void EditNameButton_Click(object sender, RoutedEventArgs e)
         {
-            EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowa nazwa reguły",editRuleWindowViewModel.MyRuleName);
-            editSimpleText.ShowDialog();
-            editRuleWindowViewModel.MyRuleName=editSimpleText.GetName();
+            editRuleWindowViewModel.EditName();
         }
         private void ChooseFolder_Click(object sender, RoutedEventArgs e)
         {
-
+            editRuleWindowViewModel.EditChoosenFolder();
         }
         private void ChooseFile_Click(object sender, RoutedEventArgs e)
         {
-
+            editRuleWindowViewModel.EditChoosenFile();
         }
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-
+            editRuleWindowViewModel.EditMail(RuleListBox.SelectedItems);
         }
         private void AcceptEdition_Click(object sender, RoutedEventArgs e)
         {

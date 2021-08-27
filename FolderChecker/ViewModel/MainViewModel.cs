@@ -59,12 +59,16 @@ namespace FolderChecker.ViewModel
         }
         public void DeleteRule(object rule)
         {
-            if (rule.GetType() == typeof(Rule))
+            if (rule!=null)
             {
-                Rule newRule = (Rule)rule;
-                MyRulesCollection.Remove(newRule);
-                onRuleDeleted(MyRulesCollection.ToList());
+                if (rule.GetType() == typeof(Rule))
+                {
+                    Rule newRule = (Rule)rule;
+                    MyRulesCollection.Remove(newRule);
+                    onRuleDeleted(MyRulesCollection.ToList());
+                }
             }
+
         }
         public void AddRule()
         {
@@ -77,27 +81,50 @@ namespace FolderChecker.ViewModel
             }
 
         }
-        public void EditRule(object anything)
+        public void EditRule(object choosenRulesToEdit)
         {
-            List<Object> collection = new List<Object>((IEnumerable<Object>)anything);
-            if (collection.Count!=0)
+            List<Rule> rules = ConvertObjectToList(choosenRulesToEdit);
+            if (rules.Count!=0)
             {
-                List<Rule> rulesToedit = new List<Rule>();
-
-                foreach (var item in collection)
+                for (int i = 0; i < rules.Count; i++)
                 {
-                    rulesToedit.Add((Rule)item);
+                    EditRuleWindow editRuleWindow = new EditRuleWindow(rules[i]);
+                    editRuleWindow.ShowDialog();
+                    rules[i] = editRuleWindow.editRuleWindowViewModel.MyRuleToEdit;
                 }
-                if (rulesToedit.Count != 0)
-                {
-                    foreach (var rule in rulesToedit)
-                    {
-                        EditRuleWindow editRuleWindow = new EditRuleWindow(rule);
-                        editRuleWindow.ShowDialog();
-                    }
-                }
+                UpdateCollection(rules);
             }
 
+            onRuleAdded(MyRulesCollection.ToList());
+        }
+        private List<Rule> ConvertObjectToList(object choosenRulesToEdit)
+        {
+            List<Object> collection = new List<Object>((IEnumerable<Object>)choosenRulesToEdit);
+            List<Rule> rules = new List<Rule>();
+            if (collection.Count != 0)
+            {
+                foreach (var item in collection)
+                {
+                    rules.Add((Rule)item);
+                }
+            }
+            return rules;
+        }
+        private void UpdateCollection(List<Rule> rules)
+        {
+            foreach (var rule in rules)
+            {
+                for (int i = 0; i < MyRulesCollection.Count; i++)
+                {
+                    if (rule.myRuleID == MyRulesCollection[i].myRuleID)
+                    {
+                        MyRulesCollection[i] = rule;
+                        MyRulesCollection[i].MyAdressMailstring ="";
+
+                    }
+                }
+
+            }
         }
     }
 }

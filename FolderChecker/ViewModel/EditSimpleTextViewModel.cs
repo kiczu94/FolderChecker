@@ -30,6 +30,12 @@ namespace FolderChecker.ViewModel
             set { _oldText = value; }
         }
 
+        public string MyTextToShow
+        {
+            get { return _oldText; }
+            set { _newText = value; }
+        }
+
 
         public EditSimpleTextViewModel()
         {

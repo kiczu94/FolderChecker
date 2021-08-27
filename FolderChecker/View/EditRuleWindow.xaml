@@ -47,13 +47,13 @@
                 <TextBlock 
                     x:Name="Path" 
                     Width="400"
-                    Text="{Binding Path= MyRuleToEdit.myPathToTrack}"
+                    Text="{Binding Path= MyRulePath}"
                     TextWrapping="WrapWithOverflow"></TextBlock>
             </WrapPanel>
             <ListBox 
                 Margin="10"
                 x:Name="RuleListBox"
-                ItemsSource="{Binding MyRuleToEdit.myMailAdresses}"
+                ItemsSource="{Binding MyMailAdresses}"
                 Height="250">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

@@ -32,7 +32,6 @@ namespace FolderChecker.View
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            editSimpleTextViewModel.editText();
             this.Close();
         }
         public string GetName()

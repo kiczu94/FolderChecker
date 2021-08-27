@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FolderChecker.View"
         mc:Ignorable="d"
-        Title="MainView" Height="500" Width="800"
+        Title="MainView" Height="500" Width="845"
         >
     <Window.Resources>
         <DataTemplate x:Key="WrapCell">
@@ -14,77 +14,72 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="133"></RowDefinition>
-            <RowDefinition Height="133"></RowDefinition>
-            <RowDefinition Height="134"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25"></ColumnDefinition>
-            <ColumnDefinition Width="187"></ColumnDefinition>
-            <ColumnDefinition Width="188"></ColumnDefinition>
-            <ColumnDefinition Width="188"></ColumnDefinition>
-            <ColumnDefinition Width="187"></ColumnDefinition>
-            <ColumnDefinition Width="24"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock></TextBlock>
-        <ListView
+        <WrapPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="4">
+            <ListView 
+                MaxWidth="1000"
             Margin="10" 
             x:Name="ruleDetails" 
-            Height="325" 
-            Width="550" 
-            Grid.Column="1" 
-            Grid.Row="1" 
-            Grid.ColumnSpan="4" 
-            Grid.RowSpan="3" 
             HorizontalAlignment="Left"
             ItemsSource="{Binding MyRulesCollection}" 
             HorizontalContentAlignment="Center"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="420"
             >
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Height" Value="20"></Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView AllowsColumnReorder="True"
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Height" Value="20"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True"
                           ColumnHeaderToolTip="Szczegóły reguł">
-                    <GridViewColumn
+                        
+                        <GridViewColumn
                         Width="50"
                         DisplayMemberBinding="{Binding Path=myRuleName}" 
-                        Header="Nazwa">
-                    </GridViewColumn>
-                    <GridViewColumn
+                        >
+                            <GridViewColumnHeader Content="Nazwa" MaxWidth="100"></GridViewColumnHeader>
+                        </GridViewColumn>
+                        <GridViewColumn
                         Width="200"
                         DisplayMemberBinding="{Binding Path=myPathToTrack}" 
-                        Header="Ścieżka">
-                    </GridViewColumn>
-                    <GridViewColumn
+                        Header="Ścieżka"
+                            >
+                        </GridViewColumn>
+                        <GridViewColumn
                         Header="Wysyłane do"
                         Width="300">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" Text="{Binding Path=MyAdressMailstring}"></TextBlock>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <StackPanel
-            Grid.Column="4"
-            Grid.Row="1"
-            Grid.RowSpan="2">
-            <TextBlock 
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" Text="{Binding Path=MyAdressMailstring}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel HorizontalAlignment="Right">
+                <TextBlock 
                 Margin="10"
                 Height="40"
                 Width="150"
                 Text="Reguły"
                 TextAlignment="Center" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5,0,0" 
                 />
-            <Button
+                <Button
                 x:Name="AddButton"
                 Margin="10"
                 Grid.Column="4"
@@ -92,7 +87,7 @@
                 Height="40"
                 Width="150" 
                 Content="Dodaj..." Click="AddButton_Click"></Button>
-            <Button
+                <Button
                 x:Name="DeleteButton"
                 Margin="10"
                 Grid.Column="4"
@@ -100,7 +95,7 @@
                 Height="40"
                 Width="150" 
                 Content="Usuń..." Click="DeleteButton_Click"></Button>
-            <Button
+                <Button
                 x:Name="EditButton"
                 Margin="10"
                 Grid.Column="4"
@@ -108,7 +103,8 @@
                 Height="40"
                 Width="150"
                 Content="Edytuj..." Click="EditButton_Click"></Button>
-        </StackPanel>
+            </StackPanel>
+        </WrapPanel>
     </Grid>
 </Window>
 
