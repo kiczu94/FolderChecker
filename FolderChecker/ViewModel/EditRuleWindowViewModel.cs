@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using FolderChecker.Model;
 using FolderChecker.View;
 using Microsoft.Win32;
@@ -69,25 +70,14 @@ namespace FolderChecker.ViewModel
         }
         public void EditMail(object choosenMailToEdit)
         {
-            List<string> mailsToEdit = ConvertObjectToList(choosenMailToEdit);
-            if (mailsToEdit.Count != 0)
+            if (MyRuleToEdit.myMailAdresses.Count == 0)
             {
-                for (int i = 0; i < mailsToEdit.Count; i++)
-                {
-                    EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowa nazwa reguły", mailsToEdit[i]);
-                    editSimpleText.ShowDialog();
-                    for (int j = 0; j < MyRuleToEdit.myMailAdresses.Count; j++)
-                    {
-                        if (MyRuleToEdit.myMailAdresses[j] == editSimpleText.editSimpleTextViewModel.MyOldText)
-                        {
-                            MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
-                            MyMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
-                        }
-                    }
-                }
-                OnPropertyChanged("MyMailAdresses");
+                AddEmail();
             }
-
+            else
+            {
+                EditEmail(choosenMailToEdit);
+            }
         }
         public void EditChoosenFolder()
         {
@@ -136,6 +126,37 @@ namespace FolderChecker.ViewModel
             }
             return vs;
         }
-
+        private void AddEmail()
+        {
+            AddEmailAdressWindow addEmailAdressWindow = new AddEmailAdressWindow();
+            addEmailAdressWindow.ShowDialog();
+            foreach (var mail in addEmailAdressWindow.Export())
+            {
+                MyRuleToEdit.myMailAdresses.Add(mail);
+            }
+            MyMailAdresses = ConvertListToCollection(MyRuleToEdit.myMailAdresses);
+            OnPropertyChanged("MyMailAdresses");
+        }
+        private void EditEmail(object choosenMailToEdit)
+        {
+            List<string> mailsToEdit = ConvertObjectToList(choosenMailToEdit);
+            if (mailsToEdit.Count != 0)
+            {
+                for (int i = 0; i < mailsToEdit.Count; i++)
+                {
+                    EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowa nazwa reguły", mailsToEdit[i]);
+                    editSimpleText.ShowDialog();
+                    for (int j = 0; j < MyRuleToEdit.myMailAdresses.Count; j++)
+                    {
+                        if (MyRuleToEdit.myMailAdresses[j] == editSimpleText.editSimpleTextViewModel.MyOldText)
+                        {
+                            MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
+                            MyMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
+                        }
+                    }
+                }
+                OnPropertyChanged("MyMailAdresses");
+            }
+        }
     }
 }

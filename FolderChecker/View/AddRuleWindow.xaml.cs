@@ -42,7 +42,6 @@ namespace FolderChecker.View
         private void AddMail_Click(object sender, RoutedEventArgs e)
         {
             AddRuleWindowViewModel.AddMail();
-           
         }
 
         private void AddNewRule_Click(object sender, RoutedEventArgs e)
