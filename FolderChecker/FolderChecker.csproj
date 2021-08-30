@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\FileWatcher.cs" />
     <Compile Include="Model\JSONoperations.cs" />
     <Compile Include="Model\Rule.cs" />
     <Compile Include="Model\RuleEventArgs.cs" />

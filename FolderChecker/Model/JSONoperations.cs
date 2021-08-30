@@ -16,11 +16,7 @@ namespace FolderChecker.Model
             string json = JsonConvert.SerializeObject(rules);
             File.WriteAllText(@"C:\Users\tomasz.tkocz\Desktop\ghghg\rule.json", json);
         }
-        public static void onRuleAdded(object source, RuleEventArgs ruleEventArgs)
-        {
-            CreateListOfRulesJSON(ruleEventArgs.rules);
-        }
-        public static void onRuleDeleted(object source, RuleEventArgs ruleEventArgs)
+        public static void onRuleUpdated(object source, RuleEventArgs ruleEventArgs)
         {
             CreateListOfRulesJSON(ruleEventArgs.rules);
         }
