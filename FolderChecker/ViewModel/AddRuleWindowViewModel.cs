@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -18,13 +17,11 @@ namespace FolderChecker.ViewModel
         private List<string> _emailAdresses;
         private string _ruleName;
         private List<Model.Rule> _rules;
-
         public List<Model.Rule> MyRules
         {
             get { return _rules; }
             set { _rules = value; }
         }
-
         public string MyRuleName
         {
             get { return _ruleName; }
@@ -111,7 +108,6 @@ namespace FolderChecker.ViewModel
             {
                 MessageBox.Show("Śledzisz już folder nadrzędny, nie potrzeba śledzić plików w nim się znajdujących");
             }
-
         }
         private ObservableCollection<string> ConverseCollection(List<string> listToConverse)
         {

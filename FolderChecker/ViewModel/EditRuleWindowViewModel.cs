@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using FolderChecker.Model;
 using FolderChecker.View;
 using Microsoft.Win32;
@@ -16,7 +12,6 @@ namespace FolderChecker.ViewModel
 {
     public class EditRuleWindowViewModel : INotifyPropertyChanged
     {
-
         private Rule _ruleToEdit;
         private string _ruleName;
         private string _rulePath;
@@ -54,9 +49,7 @@ namespace FolderChecker.ViewModel
         public ObservableCollection<string> MyMailAdresses { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public EditRuleWindowViewModel()
-        {
-
-        }
+        {}
         public void onClosed(object source, EventArgs args)
         {
             MyRuleToEdit.myRuleName = MyRuleName;

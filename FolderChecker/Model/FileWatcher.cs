@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
@@ -48,7 +44,6 @@ namespace FolderChecker.Model
                 }
                 else
                 {
-
                     watcher.Path = rule.myPathToTrack;
                     int whenLastSlash = watcher.Path.LastIndexOf('\\');
                     string container = watcher.Path.Remove(whenLastSlash, watcher.Path.Length - whenLastSlash);
@@ -60,7 +55,6 @@ namespace FolderChecker.Model
                     MyFileSystemWatchers.Add(watcher);
                     MyFileSystemWatchers.Add(containerWatcher);
                 }
-
             }
         }
         private void onCreated(object sender, FileSystemEventArgs createEventArgs)
@@ -71,7 +65,6 @@ namespace FolderChecker.Model
         {
             MessageBox.Show($"Renamed: {e.OldName} to {e.Name}");
             this.onFileRenamed(e);
-
         }
         protected virtual void onFileRenamed(RenamedEventArgs args)
         {

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FolderChecker.ViewModel
 {
@@ -42,7 +39,6 @@ namespace FolderChecker.ViewModel
                 {
                     _mailAdressesCollection = value;
                 }
-
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -61,7 +57,6 @@ namespace FolderChecker.ViewModel
                 MyMailAdressesCollection.Add(MyEmailString);
                 MyEmailString = String.Empty;
             }
-
         }
         public List<string> exportEmailAdresses()
         {

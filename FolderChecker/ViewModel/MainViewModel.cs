@@ -7,15 +7,12 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FolderChecker.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Model.Rule> _rulesCollection;
-
         public ObservableCollection<Model.Rule> MyRulesCollection
         {
             get { return _rulesCollection; }
@@ -27,7 +24,6 @@ namespace FolderChecker.ViewModel
         }
         public MainViewModel()
         {
-
             if (File.Exists(@"C:\Users\tomasz.tkocz\Desktop\FolderChecker\FolderChecker\bin\jsony próbne\rule.json"))
             {
                 MyRulesCollection = JSONoperations.loadRules();
@@ -66,7 +62,6 @@ namespace FolderChecker.ViewModel
                     onRuleUpdated(MyRulesCollection.ToList());
                 }
             }
-
         }
         public void AddRule()
         {
@@ -77,7 +72,6 @@ namespace FolderChecker.ViewModel
                 MyRulesCollection.Add(addRuleWindow.GetRule());
                 onRuleUpdated(MyRulesCollection.ToList());
             }
-
         }
         public void EditRule(object choosenRulesToEdit)
         {
@@ -92,7 +86,6 @@ namespace FolderChecker.ViewModel
                 }
                 UpdateCollection(rules);
             }
-
             onRuleUpdated(MyRulesCollection.ToList());
         }
         private List<Rule> ConvertObjectToList(object choosenRulesToEdit)
@@ -139,6 +132,5 @@ namespace FolderChecker.ViewModel
             }
             onRuleUpdated(MyRulesCollection.ToList());
         }
-
     }
 }

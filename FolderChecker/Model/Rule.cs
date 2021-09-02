@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FolderChecker.Model
 {
@@ -12,7 +8,6 @@ namespace FolderChecker.Model
     {
         private static long lastID;
         private long _ruleID;
-
         public long myRuleID
         {
             get { return _ruleID; }
@@ -35,7 +30,6 @@ namespace FolderChecker.Model
             {
                 return _pathToTrack;
             }
-
             set
             {
                 _pathToTrack = value;
@@ -77,7 +71,6 @@ namespace FolderChecker.Model
                     }
                 }
                 return _AdressMailString;
-
             }
         }
         public Rule(string name, string pathToTrack, List<string> mailAdresses)
