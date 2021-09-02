@@ -6,6 +6,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.Win32;
 using FolderChecker.View;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace FolderChecker.ViewModel
 {
@@ -16,6 +17,14 @@ namespace FolderChecker.ViewModel
         private ObservableCollection<string> _emailAdressesCollection;
         private List<string> _emailAdresses;
         private string _ruleName;
+        private List<Model.Rule> _rules;
+
+        public List<Model.Rule> MyRules
+        {
+            get { return _rules; }
+            set { _rules = value; }
+        }
+
         public string MyRuleName
         {
             get { return _ruleName; }
@@ -92,9 +101,17 @@ namespace FolderChecker.ViewModel
         }
         public void AddRule()
         {
-            _workingRule.myMailAdresses = MyEmailAdresses;
-            _workingRule.myRuleName = MyRuleName;
-            _workingRule.myPathToTrack = MyRulePath;
+            if (CheckIfRuleCorrect(_workingRule,MyRules))
+            {
+                _workingRule.myMailAdresses = MyEmailAdresses;
+                _workingRule.myRuleName = MyRuleName;
+                _workingRule.myPathToTrack = MyRulePath;
+            }
+            else
+            {
+                MessageBox.Show("Śledzisz już folder nadrzędny, nie potrzeba śledzić plików w nim się znajdujących");
+            }
+
         }
         private ObservableCollection<string> ConverseCollection(List<string> listToConverse)
         {
@@ -104,6 +121,22 @@ namespace FolderChecker.ViewModel
                 collection.Add(item);
             }
             return collection;
+        }
+        private bool CheckIfRuleCorrect(Model.Rule rule, List<Model.Rule> rules)
+        {
+            bool isCorrect=true;
+            foreach (var item in rules)
+            {
+                if (rule.myPathToTrack.Contains(item.myPathToTrack))
+                {
+                    return isCorrect = false;
+                }
+                else
+                {
+                   return isCorrect = true;
+                }
+            }
+            return isCorrect;
         }
     }
 }

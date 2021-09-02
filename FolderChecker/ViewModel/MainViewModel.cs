@@ -27,18 +27,19 @@ namespace FolderChecker.ViewModel
         }
         public MainViewModel()
         {
-            if (File.Exists(@"C:\Users\tomasz.tkocz\Desktop\ghghg\rule.json"))
+
+            if (File.Exists(@"C:\Users\tomasz.tkocz\Desktop\FolderChecker\FolderChecker\bin\jsony próbne\rule.json"))
             {
                 MyRulesCollection = JSONoperations.loadRules();
-                FileWatcher fileWatcher = new FileWatcher(MyRulesCollection.ToList());
-                fileWatcher.FileRenamed += onFileRenamed;
-                RuleUpdated += fileWatcher.onRuleUpdated;
             }
             else
             {
                 MyRulesCollection = new ObservableCollection<Rule>();
             }
-           RuleUpdated+= JSONoperations.onRuleUpdated;
+            FileWatcher fileWatcher = new FileWatcher(MyRulesCollection.ToList());
+            fileWatcher.FileRenamed += onFileRenamed;
+            RuleUpdated += fileWatcher.onRuleUpdated;
+            RuleUpdated += JSONoperations.onRuleUpdated;
         }
         public delegate void RuleAddedEventHandler(object source, RuleEventArgs args);
         public delegate void RuleDeletedEventHandler(object sorce, RuleEventArgs args);
@@ -56,7 +57,7 @@ namespace FolderChecker.ViewModel
         }
         public void DeleteRule(object rule)
         {
-            if (rule!=null)
+            if (rule != null)
             {
                 if (rule.GetType() == typeof(Rule))
                 {
@@ -69,7 +70,7 @@ namespace FolderChecker.ViewModel
         }
         public void AddRule()
         {
-            AddRuleWindow addRuleWindow = new AddRuleWindow();
+            AddRuleWindow addRuleWindow = new AddRuleWindow(MyRulesCollection.ToList());
             addRuleWindow.ShowDialog();
             if (addRuleWindow.GetRule().myRuleName != null && addRuleWindow.GetRule().myPathToTrack != null && addRuleWindow.GetRule().myMailAdresses != null)
             {
@@ -81,7 +82,7 @@ namespace FolderChecker.ViewModel
         public void EditRule(object choosenRulesToEdit)
         {
             List<Rule> rules = ConvertObjectToList(choosenRulesToEdit);
-            if (rules.Count!=0)
+            if (rules.Count != 0)
             {
                 for (int i = 0; i < rules.Count; i++)
                 {
@@ -116,23 +117,28 @@ namespace FolderChecker.ViewModel
                     if (rule.myRuleID == MyRulesCollection[i].myRuleID)
                     {
                         MyRulesCollection[i] = rule;
-                        MyRulesCollection[i].MyAdressMailstring ="";
-
+                        MyRulesCollection[i].MyAdressMailstring = "";
                     }
                 }
-
             }
         }
         private void onFileRenamed(object source, RenamedEventArgs args)
         {
             foreach (var rule in MyRulesCollection)
             {
-                if (rule.myPathToTrack==args.OldFullPath)
+                if (rule.myPathToTrack == args.OldFullPath && Path.HasExtension(rule.myPathToTrack))
                 {
                     rule.myPathToTrack = args.FullPath;
-                    onRuleUpdated(MyRulesCollection.ToList());
+                }
+                else if (rule.myPathToTrack.Contains(args.OldFullPath))
+                {
+                    string fileName = rule.myPathToTrack.Remove(0, args.OldFullPath.Length);
+                    string newPath = args.FullPath + fileName;
+                    rule.myPathToTrack = newPath;
                 }
             }
+            onRuleUpdated(MyRulesCollection.ToList());
         }
+
     }
 }

@@ -14,7 +14,7 @@ namespace FolderChecker.Model
         private static void CreateListOfRulesJSON(List<Rule> rules)
         {
             string json = JsonConvert.SerializeObject(rules);
-            File.WriteAllText(@"C:\Users\tomasz.tkocz\Desktop\ghghg\rule.json", json);
+            File.WriteAllText(@"C:\Users\tomasz.tkocz\Desktop\FolderChecker\FolderChecker\bin\jsony próbne\rule.json", json);
         }
         public static void onRuleUpdated(object source, RuleEventArgs ruleEventArgs)
         {
@@ -22,7 +22,7 @@ namespace FolderChecker.Model
         }
         public static ObservableCollection<Rule> loadRules()
         {
-            string json = File.ReadAllText(@"C:\Users\tomasz.tkocz\Desktop\ghghg\rule.json");
+            string json = File.ReadAllText(@"C:\Users\tomasz.tkocz\Desktop\FolderChecker\FolderChecker\bin\jsony próbne\rule.json");
             return JsonConvert.DeserializeObject<ObservableCollection<Rule>>(json);
         }
 

@@ -23,8 +23,9 @@ namespace FolderChecker.View
     public partial class AddRuleWindow : Window
     {
         private ViewModel.AddRuleWindowViewModel AddRuleWindowViewModel = new ViewModel.AddRuleWindowViewModel();
-        public AddRuleWindow()
+        public AddRuleWindow(List<Model.Rule> rules)
         {
+            AddRuleWindowViewModel.MyRules = rules;
             InitializeComponent();
             DataContext = AddRuleWindowViewModel; 
         }
