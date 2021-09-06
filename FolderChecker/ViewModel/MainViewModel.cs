@@ -69,6 +69,10 @@ namespace FolderChecker.ViewModel
             addRuleWindow.ShowDialog();
             if (addRuleWindow.GetRule().myRuleName != null && addRuleWindow.GetRule().myPathToTrack != null && addRuleWindow.GetRule().myMailAdresses != null)
             {
+                foreach (var item in addRuleWindow.GetRulesToDelete())
+                {
+                    MyRulesCollection.Remove(item);
+                }
                 MyRulesCollection.Add(addRuleWindow.GetRule());
                 onRuleUpdated(MyRulesCollection.ToList());
             }

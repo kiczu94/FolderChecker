@@ -40,5 +40,9 @@ namespace FolderChecker.View
         {
             return AddRuleWindowViewModel.MyWorkingRule;
         }
+        public List<Model.Rule> GetRulesToDelete()
+        {
+            return AddRuleWindowViewModel.MyRulesToDelete;
+        }
     }
 }

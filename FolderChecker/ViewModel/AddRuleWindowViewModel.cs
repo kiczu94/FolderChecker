@@ -22,6 +22,7 @@ namespace FolderChecker.ViewModel
             get { return _rules; }
             set { _rules = value; }
         }
+        public List<Model.Rule> MyRulesToDelete { get; set; }
         public string MyRuleName
         {
             get { return _ruleName; }
@@ -56,6 +57,7 @@ namespace FolderChecker.ViewModel
             MyWorkingRule = new Model.Rule();
             MyEmailAdresses = new List<string>();
             MyEmailAdressesCollection = new ObservableCollection<string>();
+            MyRulesToDelete = new List<Model.Rule>();
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -98,7 +100,7 @@ namespace FolderChecker.ViewModel
         }
         public void AddRule()
         {
-            if (CheckIfRuleCorrect(_workingRule,MyRules))
+            if (CheckIfFolderAboveIsTracked(_workingRule,MyRules)&&CheckIfAnythingBeneathIsTracked(_workingRule, MyRules))
             {
                 _workingRule.myMailAdresses = MyEmailAdresses;
                 _workingRule.myRuleName = MyRuleName;
@@ -118,7 +120,7 @@ namespace FolderChecker.ViewModel
             }
             return collection;
         }
-        private bool CheckIfRuleCorrect(Model.Rule rule, List<Model.Rule> rules)
+        private bool CheckIfFolderAboveIsTracked(Model.Rule rule, List<Model.Rule> rules)
         {
             bool isCorrect=true;
             foreach (var item in rules)
@@ -133,6 +135,23 @@ namespace FolderChecker.ViewModel
                 }
             }
             return isCorrect;
+        }
+        private bool CheckIfAnythingBeneathIsTracked(Model.Rule rule, List<Model.Rule> rules)
+        {
+            MyRulesToDelete.Clear();
+            foreach (var item in rules)
+            {
+                if (item.myPathToTrack.Contains(rule.myPathToTrack))
+                {
+                    MyRulesToDelete.Add(item);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
