@@ -26,7 +26,6 @@ namespace FolderChecker.View
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-
             mainViewModel.EditRule(ruleDetails.SelectedItems);
         }
     }

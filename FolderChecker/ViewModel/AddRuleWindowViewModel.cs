@@ -12,28 +12,28 @@ namespace FolderChecker.ViewModel
 {
     public class AddRuleWindowViewModel : INotifyPropertyChanged
     {
+        private List<string> _emailAdresses;
         public List<string> adressesToDelete;
         public List<long> ruleIDtoEdit;
+        private List<Rule> _rules;
         private Rule _workingRule;
         private string _rulePath;
         private ObservableCollection<string> _emailAdressesCollection;
-        private List<string> _emailAdresses;
         private string _ruleName;
-        private List<Rule> _rules;
         public List<Rule> MyRules
         {
             get { return _rules; }
             set { _rules = value; }
         }
-        public string MyRuleName
-        {
-            get { return _ruleName; }
-            set { _ruleName = value; }
-        }
         public List<string> MyEmailAdresses
         {
             get { return _emailAdresses; }
             set { _emailAdresses = value; }
+        }
+        public string MyRuleName
+        {
+            get { return _ruleName; }
+            set { _ruleName = value; }
         }
         public string MyRulePath
         {
@@ -103,16 +103,11 @@ namespace FolderChecker.ViewModel
         }
         public void AddRule()
         {
-            if (CheckIfFolderAboveIsTracked(_workingRule,MyRules)&&CheckIfAnythingBeneathIsTracked(_workingRule, MyRules))
-            {
-                _workingRule.myMailAdresses = MyEmailAdresses;
-                _workingRule.myRuleName = MyRuleName;
-                _workingRule.myPathToTrack = MyRulePath;
-            }
-            else
-            {
-                MessageBox.Show("Śledzisz już folder nadrzędny, nie potrzeba śledzić plików w nim się znajdujących");
-            }
+            CheckIfAnythingBeneathIsTracked(_workingRule, MyRules);
+            _workingRule.myMailAdresses = MyEmailAdresses;
+            _workingRule.myRuleName = MyRuleName;
+            _workingRule.myPathToTrack = MyRulePath;
+
         }
         private ObservableCollection<string> ConverseCollection(List<string> listToConverse)
         {
@@ -125,7 +120,7 @@ namespace FolderChecker.ViewModel
         }
         private bool CheckIfFolderAboveIsTracked(Rule rule, List<Rule> rules)
         {
-            bool isCorrect=true;
+            bool isCorrect = true;
             foreach (var item in rules)
             {
                 if (rule.myPathToTrack.Contains(item.myPathToTrack))
@@ -134,14 +129,14 @@ namespace FolderChecker.ViewModel
                 }
                 else
                 {
-                   return isCorrect = true;
+                    return isCorrect = true;
                 }
             }
             return isCorrect;
         }
         private bool CheckIfAnythingBeneathIsTracked(Rule newRule, List<Rule> rulesList)
         {
-            bool isCorrect=true;
+            bool isCorrect = true;
             foreach (var ruleInRuleList in rulesList)
             {
                 if (ruleInRuleList.myPathToTrack.Contains(newRule.myPathToTrack))
@@ -155,7 +150,7 @@ namespace FolderChecker.ViewModel
                             adressesToDelete.Add(adress);
                         }
                     }
-                    return isCorrect=false;
+                    return isCorrect = false;
                 }
             }
             return isCorrect;
