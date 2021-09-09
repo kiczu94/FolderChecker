@@ -12,8 +12,8 @@ namespace FolderChecker.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Model.Rule> _rulesCollection;
-        public ObservableCollection<Model.Rule> MyRulesCollection
+        private ObservableCollection<Rule> _rulesCollection;
+        public ObservableCollection<Rule> MyRulesCollection
         {
             get { return _rulesCollection; }
             set
@@ -37,8 +37,6 @@ namespace FolderChecker.ViewModel
             RuleUpdated += fileWatcher.onRuleUpdated;
             RuleUpdated += JSONoperations.onRuleUpdated;
         }
-        public delegate void RuleAddedEventHandler(object source, RuleEventArgs args);
-        public delegate void RuleDeletedEventHandler(object sorce, RuleEventArgs args);
         public delegate void RuleUpdatedEventHandler(object source, RuleEventArgs args);
         public event PropertyChangedEventHandler PropertyChanged;
         public event RuleUpdatedEventHandler RuleUpdated;
@@ -67,13 +65,12 @@ namespace FolderChecker.ViewModel
         {
             AddRuleWindow addRuleWindow = new AddRuleWindow(MyRulesCollection.ToList());
             addRuleWindow.ShowDialog();
-            if (addRuleWindow.GetRule().myRuleName != null && addRuleWindow.GetRule().myPathToTrack != null && addRuleWindow.GetRule().myMailAdresses != null)
+            Rule ruleToAdd = addRuleWindow.GetRule();
+            if (ruleToAdd.myRuleName != null && ruleToAdd.myPathToTrack != null && ruleToAdd.myMailAdresses != null)
             {
-                foreach (var item in addRuleWindow.GetRulesToDelete())
-                {
-                    MyRulesCollection.Remove(item);
-                }
-                MyRulesCollection.Add(addRuleWindow.GetRule());
+                //Function edit rules to avoid sending to the same person multiple times same message about change in folder
+                EditRules(addRuleWindow.AddRuleWindowViewModel);
+                MyRulesCollection.Add(ruleToAdd);
                 onRuleUpdated(MyRulesCollection.ToList());
             }
         }
@@ -135,6 +132,20 @@ namespace FolderChecker.ViewModel
                 }
             }
             onRuleUpdated(MyRulesCollection.ToList());
+        }
+        private void EditRules(AddRuleWindowViewModel viewModel)
+        {
+            for (int i = 0; i < viewModel.ruleIDtoEdit.Count; i++)
+            {
+                foreach (var rule in MyRulesCollection)
+                {
+                    if (rule.myRuleID==viewModel.ruleIDtoEdit[i])
+                    {
+                        rule.myMailAdresses.Remove(viewModel.adressesToDelete[i]);
+                        rule.MyAdressMailstring = "";
+                    }
+                }
+            }
         }
     }
 }

@@ -52,8 +52,11 @@ namespace FolderChecker.Model
                     containerWatcher.EnableRaisingEvents = true;
                     containerWatcher.IncludeSubdirectories = true;
                     containerWatcher.Filter = watcher.Path.Remove(0, whenLastSlash + 1);
+                    if (!MyFileSystemWatchers.Contains(containerWatcher))
+                    {
+                        MyFileSystemWatchers.Add(containerWatcher);
+                    }
                     MyFileSystemWatchers.Add(watcher);
-                    MyFileSystemWatchers.Add(containerWatcher);
                 }
             }
         }

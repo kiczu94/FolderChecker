@@ -6,23 +6,25 @@ using Microsoft.Win32;
 using FolderChecker.View;
 using System.Collections.ObjectModel;
 using System.Windows;
+using FolderChecker.Model;
 
 namespace FolderChecker.ViewModel
 {
     public class AddRuleWindowViewModel : INotifyPropertyChanged
     {
-        private Model.Rule _workingRule;
+        public List<string> adressesToDelete;
+        public List<long> ruleIDtoEdit;
+        private Rule _workingRule;
         private string _rulePath;
         private ObservableCollection<string> _emailAdressesCollection;
         private List<string> _emailAdresses;
         private string _ruleName;
-        private List<Model.Rule> _rules;
-        public List<Model.Rule> MyRules
+        private List<Rule> _rules;
+        public List<Rule> MyRules
         {
             get { return _rules; }
             set { _rules = value; }
         }
-        public List<Model.Rule> MyRulesToDelete { get; set; }
         public string MyRuleName
         {
             get { return _ruleName; }
@@ -47,17 +49,18 @@ namespace FolderChecker.ViewModel
             get { return _emailAdressesCollection; }
             set { _emailAdressesCollection = value; }
         }
-        public Model.Rule MyWorkingRule
+        public Rule MyWorkingRule
         {
             get { return _workingRule; }
             set { _workingRule = value; }
         }
         public AddRuleWindowViewModel()
         {
-            MyWorkingRule = new Model.Rule();
+            MyWorkingRule = new Rule();
             MyEmailAdresses = new List<string>();
             MyEmailAdressesCollection = new ObservableCollection<string>();
-            MyRulesToDelete = new List<Model.Rule>();
+            adressesToDelete = new List<string>();
+            ruleIDtoEdit = new List<long>();
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -120,7 +123,7 @@ namespace FolderChecker.ViewModel
             }
             return collection;
         }
-        private bool CheckIfFolderAboveIsTracked(Model.Rule rule, List<Model.Rule> rules)
+        private bool CheckIfFolderAboveIsTracked(Rule rule, List<Rule> rules)
         {
             bool isCorrect=true;
             foreach (var item in rules)
@@ -136,22 +139,26 @@ namespace FolderChecker.ViewModel
             }
             return isCorrect;
         }
-        private bool CheckIfAnythingBeneathIsTracked(Model.Rule rule, List<Model.Rule> rules)
+        private bool CheckIfAnythingBeneathIsTracked(Rule newRule, List<Rule> rulesList)
         {
-            MyRulesToDelete.Clear();
-            foreach (var item in rules)
+            bool isCorrect=true;
+            foreach (var ruleInRuleList in rulesList)
             {
-                if (item.myPathToTrack.Contains(rule.myPathToTrack))
+                if (ruleInRuleList.myPathToTrack.Contains(newRule.myPathToTrack))
                 {
-                    MyRulesToDelete.Add(item);
-                    return true;
-                }
-                else
-                {
-                    return false;
+
+                    foreach (var adress in MyEmailAdressesCollection)
+                    {
+                        if (ruleInRuleList.myMailAdresses.Contains(adress))
+                        {
+                            ruleIDtoEdit.Add(ruleInRuleList.myRuleID);
+                            adressesToDelete.Add(adress);
+                        }
+                    }
+                    return isCorrect=false;
                 }
             }
-            return true;
+            return isCorrect;
         }
     }
 }

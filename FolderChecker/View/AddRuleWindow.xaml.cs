@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using FolderChecker.Model;
 
 namespace FolderChecker.View
 {
@@ -8,8 +9,8 @@ namespace FolderChecker.View
     /// </summary>
     public partial class AddRuleWindow : Window
     {
-        private ViewModel.AddRuleWindowViewModel AddRuleWindowViewModel = new ViewModel.AddRuleWindowViewModel();
-        public AddRuleWindow(List<Model.Rule> rules)
+        public ViewModel.AddRuleWindowViewModel AddRuleWindowViewModel = new ViewModel.AddRuleWindowViewModel();
+        public AddRuleWindow(List<Rule> rules)
         {
             AddRuleWindowViewModel.MyRules = rules;
             InitializeComponent();
@@ -36,13 +37,9 @@ namespace FolderChecker.View
             AddRuleWindowViewModel.AddRule();
             this.Close();
         }
-        public Model.Rule GetRule()
+        public Rule GetRule()
         {
             return AddRuleWindowViewModel.MyWorkingRule;
-        }
-        public List<Model.Rule> GetRulesToDelete()
-        {
-            return AddRuleWindowViewModel.MyRulesToDelete;
         }
     }
 }

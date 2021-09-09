@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -6,6 +7,7 @@ namespace FolderChecker.Model
 {
     public class Rule : INotifyPropertyChanged
     {
+        public bool isContainer = false;
         private static long lastID;
         private long _ruleID;
         public long myRuleID
