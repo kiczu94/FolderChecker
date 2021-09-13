@@ -28,5 +28,10 @@ namespace FolderChecker.View
         {
             mainViewModel.EditRule(ruleDetails.SelectedItems);
         }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            mainViewModel.Login();
+        }
     }
 }

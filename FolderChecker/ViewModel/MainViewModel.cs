@@ -12,6 +12,7 @@ namespace FolderChecker.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private MessageSender _messageSender;
         private ObservableCollection<Rule> _rulesCollection;
         public ObservableCollection<Rule> MyRulesCollection
         {
@@ -146,6 +147,10 @@ namespace FolderChecker.ViewModel
                     }
                 }
             }
+        }
+        public void Login()
+        {
+            _messageSender = new MessageSender();
         }
     }
 }

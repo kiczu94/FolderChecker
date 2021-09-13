@@ -59,7 +59,7 @@ namespace FolderChecker.ViewModel
         {
             EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowa nazwa reguły", MyRuleName);
             editSimpleText.ShowDialog();
-            MyRuleName = editSimpleText.GetName();
+            MyRuleName = editSimpleText.GetNewText();
         }
         public void EditMail(object choosenMailToEdit)
         {

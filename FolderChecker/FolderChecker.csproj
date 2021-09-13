@@ -69,6 +69,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\FileWatcher.cs" />
     <Compile Include="Model\JSONoperations.cs" />
+    <Compile Include="Model\MessageSender.cs" />
     <Compile Include="Model\Rule.cs" />
     <Compile Include="Model\RuleEventArgs.cs" />
     <Compile Include="ViewModel\AddEmailAdressViewModel.cs" />

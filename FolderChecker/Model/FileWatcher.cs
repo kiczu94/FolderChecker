@@ -66,6 +66,7 @@ namespace FolderChecker.Model
         }
         public void OnRenamed(object sender, RenamedEventArgs e)
         {
+            
             MessageBox.Show($"Renamed: {e.OldName} to {e.Name}");
             this.onFileRenamed(e);
         }
@@ -84,8 +85,6 @@ namespace FolderChecker.Model
         {
             foreach (var watcher in MyFileSystemWatchers)
             {
-                watcher.EnableRaisingEvents = true;
-                watcher.IncludeSubdirectories = true;
                 watcher.Renamed -= OnRenamed;
             }
         }

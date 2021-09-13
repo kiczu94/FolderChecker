@@ -21,7 +21,7 @@ namespace FolderChecker.View
         {
             this.Close();
         }
-        public string GetName()
+        public string GetNewText()
         {
             return editSimpleTextViewModel.MyNewText;
         }

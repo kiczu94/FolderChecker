@@ -26,7 +26,9 @@
             set { _newText = value; }
         }
         public EditSimpleTextViewModel()
-        { }
+        {
+
+        }
         public void editText()
         {
             MyNewText = MyOldText;
