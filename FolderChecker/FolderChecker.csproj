@@ -72,6 +72,7 @@
     <Compile Include="Model\MessageSender.cs" />
     <Compile Include="Model\Rule.cs" />
     <Compile Include="Model\RuleEventArgs.cs" />
+    <Compile Include="Model\WatcherInvokedEventArgs.cs" />
     <Compile Include="ViewModel\AddEmailAdressViewModel.cs" />
     <Compile Include="ViewModel\AddRuleWindowViewModel.cs" />
     <Compile Include="ViewModel\EditRuleWindowViewModel.cs" />

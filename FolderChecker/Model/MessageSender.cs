@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using FolderChecker.View;
 using FolderChecker.ViewModel;
 
@@ -26,20 +27,23 @@ namespace FolderChecker.Model
         }
         public MessageSender()
         {
-            GetEmailAdress();
-            GetPassword();
+
         }
-        private void GetEmailAdress()
+        public void GetEmailAdress()
         {
             EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Podaj adres e-mail", MyEmailAdressSender);
             editSimpleText.ShowDialog();
             MyEmailAdressSender = editSimpleText.GetNewText();
         }
-        private void GetPassword()
+        public void GetPassword()
         {
             EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Podaj hasło", String.Empty);
             editSimpleText.ShowDialog();
             MyPassword = editSimpleText.GetNewText();
+        }
+        public void onWatcherInvoked(object source, WatcherInvokedEventArgs args)
+        {
+            MessageBox.Show($"{args.watcherPath}");
         }
 
     }

@@ -12,7 +12,7 @@ namespace FolderChecker.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private MessageSender _messageSender;
+        private MessageSender _messageSender= new MessageSender();
         private ObservableCollection<Rule> _rulesCollection;
         public ObservableCollection<Rule> MyRulesCollection
         {
@@ -37,6 +37,7 @@ namespace FolderChecker.ViewModel
             fileWatcher.FileRenamed += onFileRenamed;
             RuleUpdated += fileWatcher.onRuleUpdated;
             RuleUpdated += JSONoperations.onRuleUpdated;
+            fileWatcher.WatcherInvoked += _messageSender.onWatcherInvoked;
         }
         public delegate void RuleUpdatedEventHandler(object source, RuleEventArgs args);
         public event PropertyChangedEventHandler PropertyChanged;
@@ -150,7 +151,8 @@ namespace FolderChecker.ViewModel
         }
         public void Login()
         {
-            _messageSender = new MessageSender();
+            _messageSender.GetEmailAdress();
+            _messageSender.GetPassword();
         }
     }
 }
