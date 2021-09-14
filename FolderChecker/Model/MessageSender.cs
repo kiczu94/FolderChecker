@@ -37,7 +37,7 @@ namespace FolderChecker.Model
         }
         private void GetPassword()
         {
-            EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Podaj adres e-mail", String.Empty);
+            EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Podaj hasło", String.Empty);
             editSimpleText.ShowDialog();
             MyPassword = editSimpleText.GetNewText();
         }

@@ -137,14 +137,21 @@ namespace FolderChecker.ViewModel
             {
                 for (int i = 0; i < mailsToEdit.Count; i++)
                 {
-                    EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowa nazwa reguły", mailsToEdit[i]);
+                    EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowy adres mail", mailsToEdit[i]);
                     editSimpleText.ShowDialog();
                     for (int j = 0; j < MyRuleToEdit.myMailAdresses.Count; j++)
                     {
                         if (MyRuleToEdit.myMailAdresses[j] == editSimpleText.editSimpleTextViewModel.MyOldText)
                         {
-                            MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
-                            MyMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
+                            if (editSimpleText.editSimpleTextViewModel.MyNewText==null)
+                            {
+                                MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyOldText;
+                            }
+                            else
+                            {
+                                MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
+                                MyMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
+                            }
                         }
                     }
                 }
