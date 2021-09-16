@@ -14,5 +14,9 @@ namespace FolderChecker.Model
         {
 
         }
+        public WatcherInvokedEventArgs(WatcherChangeTypes changeType, string directory, string name, string oldName, string watcherPathInput) : base(changeType, directory, name, oldName)
+        {
+            watcherPath = watcherPathInput;
+        }
     }
 }

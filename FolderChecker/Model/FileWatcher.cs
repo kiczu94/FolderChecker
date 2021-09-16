@@ -29,6 +29,10 @@ namespace FolderChecker.Model
             UpdateWatchers(rules);
             SetWatchers();    
         }
+        public FileWatcher()
+        {
+
+        }
         private void UpdateWatchers(List<Rule> rules)
         {
             MyFileSystemWatchers.Clear();
@@ -62,34 +66,13 @@ namespace FolderChecker.Model
         }
         public void onCreated(object sender, FileSystemEventArgs createEventArgs)
         {
-            var sender2 = new FileSystemWatcher();
-            if (sender.GetType()==typeof(FileSystemWatcher))
-            {
-                sender2 = (FileSystemWatcher)sender;
-            }
-            this.onWatcherInvoked(new WatcherInvokedEventArgs(createEventArgs.ChangeType, createEventArgs.FullPath.Replace(createEventArgs.Name, string.Empty), createEventArgs.Name, string.Empty) { watcherPath=sender2.Path});
+            this.onWatcherInvoked(new WatcherInvokedEventArgs(createEventArgs.ChangeType, createEventArgs.FullPath.Replace(createEventArgs.Name, string.Empty), createEventArgs.Name, string.Empty, GetFileSystemWatcher(sender).Path));
         }
         public void OnRenamed(object sender, RenamedEventArgs e)
         {  
             MessageBox.Show($"Renamed: {e.OldName} to {e.Name}");
             this.onFileRenamed(e);
-            this.onWatcherInvoked(new WatcherInvokedEventArgs(e.ChangeType, e.FullPath.Replace(e.Name, string.Empty), e.Name, e.OldName));
-        }
-        protected virtual void onFileRenamed(RenamedEventArgs args)
-        {
-            if (FileRenamed != null)
-                FileRenamed(this, args);
-        }
-        protected virtual void onWatcherInvoked(WatcherInvokedEventArgs args)
-        {
-            if (WatcherInvoked != null)
-                WatcherInvoked(this, args);
-        }
-        public void onRuleUpdated(object source, RuleEventArgs ruleEventArgs)
-        {
-            ResetWatchers();
-            UpdateWatchers(ruleEventArgs.rules);
-            SetWatchers();
+            this.onWatcherInvoked(new WatcherInvokedEventArgs(e.ChangeType, e.FullPath.Replace(e.Name, string.Empty), e.Name, e.OldName, GetFileSystemWatcher(sender).Path));
         }
         private void ResetWatchers()
         {
@@ -108,6 +91,31 @@ namespace FolderChecker.Model
                 watcher.Renamed += OnRenamed;
                 watcher.Created += onCreated;
             }
+        }
+        private FileSystemWatcher GetFileSystemWatcher(object sender)
+        {
+            var sender2 = new FileSystemWatcher();
+            if (sender.GetType() == typeof(FileSystemWatcher))
+            {
+                sender2 = (FileSystemWatcher)sender;
+            }
+            return sender2;
+        }
+        protected virtual void onFileRenamed(RenamedEventArgs args)
+        {
+            if (FileRenamed != null)
+                FileRenamed(this, args);
+        }
+        protected virtual void onWatcherInvoked(WatcherInvokedEventArgs args)
+        {
+            if (WatcherInvoked != null)
+                WatcherInvoked(this, args);
+        }
+        public void onRuleUpdated(object source, RuleEventArgs ruleEventArgs)
+        {
+            ResetWatchers();
+            UpdateWatchers(ruleEventArgs.rules);
+            SetWatchers();
         }
     }
 }

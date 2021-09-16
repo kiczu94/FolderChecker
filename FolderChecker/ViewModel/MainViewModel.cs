@@ -46,51 +46,6 @@ namespace FolderChecker.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        protected virtual void onRuleUpdated(List<Rule> rulesUpdated)
-        {
-            if (RuleUpdated != null)
-                RuleUpdated(this, new RuleEventArgs() { rules = rulesUpdated });
-        }
-        public void DeleteRule(object rule)
-        {
-            if (rule != null)
-            {
-                if (rule.GetType() == typeof(Rule))
-                {
-                    Rule newRule = (Rule)rule;
-                    MyRulesCollection.Remove(newRule);
-                    onRuleUpdated(MyRulesCollection.ToList());
-                }
-            }
-        }
-        public void AddRule()
-        {
-            AddRuleWindow addRuleWindow = new AddRuleWindow(MyRulesCollection.ToList());
-            addRuleWindow.ShowDialog();
-            Rule ruleToAdd = addRuleWindow.GetRule();
-            if (ruleToAdd.myRuleName != null && ruleToAdd.myPathToTrack != null && ruleToAdd.myMailAdresses != null)
-            {
-                //Function edit rules to avoid sending to the same person multiple times same message about change in folder
-                EditRules(addRuleWindow.AddRuleWindowViewModel);
-                MyRulesCollection.Add(ruleToAdd);
-                onRuleUpdated(MyRulesCollection.ToList());
-            }
-        }
-        public void EditRule(object choosenRulesToEdit)
-        {
-            List<Rule> rules = ConvertObjectToList(choosenRulesToEdit);
-            if (rules.Count != 0)
-            {
-                for (int i = 0; i < rules.Count; i++)
-                {
-                    EditRuleWindow editRuleWindow = new EditRuleWindow(rules[i]);
-                    editRuleWindow.ShowDialog();
-                    rules[i] = editRuleWindow.editRuleWindowViewModel.MyRuleToEdit;
-                }
-                UpdateCollection(rules);
-            }
-            onRuleUpdated(MyRulesCollection.ToList());
-        }
         private List<Rule> ConvertObjectToList(object choosenRulesToEdit)
         {
             List<Object> collection = new List<Object>((IEnumerable<Object>)choosenRulesToEdit);
@@ -141,13 +96,58 @@ namespace FolderChecker.ViewModel
             {
                 foreach (var rule in MyRulesCollection)
                 {
-                    if (rule.myRuleID==viewModel.ruleIDtoEdit[i])
+                    if (rule.myRuleID == viewModel.ruleIDtoEdit[i])
                     {
                         rule.myMailAdresses.Remove(viewModel.adressesToDelete[i]);
                         rule.MyAdressMailstring = "";
                     }
                 }
             }
+        }
+        protected virtual void onRuleUpdated(List<Rule> rulesUpdated)
+        {
+            if (RuleUpdated != null)
+                RuleUpdated(this, new RuleEventArgs() { rules = rulesUpdated });
+        }
+        public void DeleteRule(object rule)
+        {
+            if (rule != null)
+            {
+                if (rule.GetType() == typeof(Rule))
+                {
+                    Rule newRule = (Rule)rule;
+                    MyRulesCollection.Remove(newRule);
+                    onRuleUpdated(MyRulesCollection.ToList());
+                }
+            }
+        }
+        public void AddRule()
+        {
+            AddRuleWindow addRuleWindow = new AddRuleWindow(MyRulesCollection.ToList());
+            addRuleWindow.ShowDialog();
+            Rule ruleToAdd = addRuleWindow.GetRule();
+            if (ruleToAdd.myRuleName != null && ruleToAdd.myPathToTrack != null && ruleToAdd.myMailAdresses != null)
+            {
+                //Function edit rules to avoid sending to the same person multiple times same message about change in folder
+                EditRules(addRuleWindow.AddRuleWindowViewModel);
+                MyRulesCollection.Add(ruleToAdd);
+                onRuleUpdated(MyRulesCollection.ToList());
+            }
+        }
+        public void EditRule(object choosenRulesToEdit)
+        {
+            List<Rule> rules = ConvertObjectToList(choosenRulesToEdit);
+            if (rules.Count != 0)
+            {
+                for (int i = 0; i < rules.Count; i++)
+                {
+                    EditRuleWindow editRuleWindow = new EditRuleWindow(rules[i]);
+                    editRuleWindow.ShowDialog();
+                    rules[i] = editRuleWindow.editRuleWindowViewModel.MyRuleToEdit;
+                }
+                UpdateCollection(rules);
+            }
+            onRuleUpdated(MyRulesCollection.ToList());
         }
         public void Login()
         {
