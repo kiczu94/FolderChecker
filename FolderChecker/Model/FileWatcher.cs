@@ -64,15 +64,18 @@ namespace FolderChecker.Model
                 }
             }
         }
-        public void onCreated(object sender, FileSystemEventArgs createEventArgs)
+        public void onCreated(object sender, FileSystemEventArgs e)
         {
-            this.onWatcherInvoked(new WatcherInvokedEventArgs(createEventArgs.ChangeType, createEventArgs.FullPath.Replace(createEventArgs.Name, string.Empty), createEventArgs.Name, string.Empty, GetFileSystemWatcher(sender).Path));
+            this.onWatcherInvoked(new WatcherInvokedEventArgs(e.ChangeType, e.FullPath.Replace(e.Name, string.Empty), e.Name, string.Empty, GetFileSystemWatcher(sender).Path));
         }
         public void OnRenamed(object sender, RenamedEventArgs e)
         {  
-            MessageBox.Show($"Renamed: {e.OldName} to {e.Name}");
             this.onFileRenamed(e);
             this.onWatcherInvoked(new WatcherInvokedEventArgs(e.ChangeType, e.FullPath.Replace(e.Name, string.Empty), e.Name, e.OldName, GetFileSystemWatcher(sender).Path));
+        }
+        public void onDeleted(object sender, FileSystemEventArgs e)
+        {
+            this.onWatcherInvoked(new WatcherInvokedEventArgs(e.ChangeType, e.FullPath.Replace(e.Name, string.Empty), e.Name, string.Empty, GetFileSystemWatcher(sender).Path));
         }
         private void ResetWatchers()
         {
@@ -80,6 +83,7 @@ namespace FolderChecker.Model
             {
                 watcher.Renamed -= OnRenamed;
                 watcher.Created -= onCreated;
+                watcher.Deleted -= onDeleted;
             }
         }
         private void SetWatchers()
@@ -90,6 +94,7 @@ namespace FolderChecker.Model
                 watcher.IncludeSubdirectories = true;
                 watcher.Renamed += OnRenamed;
                 watcher.Created += onCreated;
+                watcher.Deleted += onDeleted;
             }
         }
         private FileSystemWatcher GetFileSystemWatcher(object sender)

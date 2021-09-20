@@ -55,11 +55,13 @@ namespace FolderChecker.Model
             switch (args.ChangeType)
             {
                 case WatcherChangeTypes.Created:
-                    textToreturn = $"Utworzono nowy plik {args.Name} w folderze {args.FullPath.Remove(args.FullPath.LastIndexOf('\\'), args.FullPath.Length - args.FullPath.LastIndexOf('\\'))}";
+                    textToreturn = $"Utworzono nowy plik {args.Name} w folderze {GetFolderPath(args)}";
                     break;
                 case WatcherChangeTypes.Renamed:
+                    textToreturn = $"Zmieniono nazwę pliku z {args.OldName.Remove(0,args.OldName.LastIndexOf('\\')+1)} na {args.Name.Remove(0, args.Name.LastIndexOf('\\') + 1)} w folderze {GetFolderPath(args)}";
                     break;
                 case WatcherChangeTypes.Deleted:
+                    textToreturn = $"Usunięto plik {args.Name.Remove(0, args.Name.LastIndexOf('\\') + 1)} w folderze {GetFolderPath(args)}";
                     break;
                 case WatcherChangeTypes.Changed:
                     break;
@@ -115,6 +117,11 @@ namespace FolderChecker.Model
                 smtp.Disconnect(true);
                 smtp.Dispose();
             }
+        }
+        private string GetFolderPath(WatcherInvokedEventArgs args)
+        {
+            string text = args.FullPath.Remove(args.FullPath.LastIndexOf('\\'), args.FullPath.Length - args.FullPath.LastIndexOf('\\'));
+            return text;
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FolderChecker.View"
         mc:Ignorable="d"
-        Title="MainView" Height="500" Width="845"
+        Title="FolderChecker" Height="500" Width="845"
         >
     <Window.Resources>
         <DataTemplate x:Key="WrapCell">

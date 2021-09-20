@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using FolderChecker.ViewModel;
 
 namespace FolderChecker.View
 {
@@ -7,7 +8,7 @@ namespace FolderChecker.View
     /// </summary>
     public partial class MainView : Window
     {
-        private ViewModel.MainViewModel mainViewModel = new ViewModel.MainViewModel();
+        private MainViewModel mainViewModel = new MainViewModel();
         public MainView()
         {
             InitializeComponent();
