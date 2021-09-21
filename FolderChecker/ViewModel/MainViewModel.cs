@@ -194,7 +194,7 @@ namespace FolderChecker.ViewModel
         }
         public void Settings()
         {
-
+            
         }
 
     }

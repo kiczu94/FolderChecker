@@ -35,9 +35,9 @@ namespace FolderChecker.Model
         }
         public void GetPassword()
         {
-            EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Podaj hasło", String.Empty);
-            editSimpleText.ShowDialog();
-            MyPassword = editSimpleText.GetNewText();
+            GetPasswordWindow passwordWindow = new GetPasswordWindow();
+            passwordWindow.ShowDialog();
+            MyPassword = passwordWindow.passwordBox1.Password;
         }
         public void onWatcherInvoked(object source, WatcherInvokedEventArgs args)
         {

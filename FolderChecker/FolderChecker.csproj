@@ -103,6 +103,9 @@
     <Compile Include="View\EditSimpleTextWindow.xaml.cs">
       <DependentUpon>EditSimpleTextWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\GetPasswordWindow.xaml.cs">
+      <DependentUpon>GetPasswordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditSimpleTextWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GetPasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
