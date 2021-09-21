@@ -5,11 +5,13 @@ using MailKit;
 using MailKit.Net.Smtp;
 using MimeKit;
 using System.Windows;
+using System.Collections.Generic;
 
 namespace FolderChecker.Model
 {
     public class MessageSender
     {
+        private List<MimeMessage> mimeMessages;
         private string _emailAdress;
         private string _password;
         public string MyEmailAdressSender
@@ -23,7 +25,7 @@ namespace FolderChecker.Model
         }
         public MessageSender()
         {
-
+            mimeMessages = new List<MimeMessage>();
         }
         public void GetEmailAdress()
         {
@@ -41,7 +43,7 @@ namespace FolderChecker.Model
         {
             if (_password != null && _emailAdress != null)
             {
-                SendMessage(GetMimeMessage(source, args, CreateText(args)));
+                mimeMessages.Add(GetMimeMessage(source, args, CreateText(args)));
             }
             else
             {

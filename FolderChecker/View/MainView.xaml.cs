@@ -34,5 +34,10 @@ namespace FolderChecker.View
         {
             mainViewModel.Login();
         }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            mainViewModel.Settings();
+        }
     }
 }

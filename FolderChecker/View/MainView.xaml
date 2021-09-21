@@ -112,6 +112,15 @@
                 Width="150"
                 Content="Zaloguj" Click="Login_Click" 
                     ></Button>
+                <Button
+                x:Name="Settings"
+                Margin="10"
+                Grid.Column="4"
+                Grid.Row="2"
+                Height="40"
+                Width="150"
+                Content="Ustawienia..." Click="Settings_Click"
+                    ></Button>
             </StackPanel>
         </WrapPanel>
     </Grid>

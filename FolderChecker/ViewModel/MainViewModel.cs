@@ -1,5 +1,6 @@
 ﻿using FolderChecker.Model;
 using FolderChecker.View;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,12 +8,14 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace FolderChecker.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private MessageSender _messageSender= new MessageSender();
+        private MessageSender _messageSender = new MessageSender();
+        private string jsonPath;
         private ObservableCollection<Rule> _rulesCollection;
         public ObservableCollection<Rule> MyRulesCollection
         {
@@ -25,9 +28,10 @@ namespace FolderChecker.ViewModel
         }
         public MainViewModel()
         {
-            if (File.Exists(@"C:\Users\tomasz.tkocz\Desktop\FolderChecker\FolderChecker\bin\jsony próbne\rule.json"))
+            LoadSettings();
+            if (File.Exists(jsonPath+"\\rule.json"))
             {
-                MyRulesCollection = JSONoperations.loadRules();
+                MyRulesCollection = JSONoperations.loadRules(jsonPath + "\\rule.json");
             }
             else
             {
@@ -107,7 +111,7 @@ namespace FolderChecker.ViewModel
         protected virtual void onRuleUpdated(List<Rule> rulesUpdated)
         {
             if (RuleUpdated != null)
-                RuleUpdated(this, new RuleEventArgs() { rules = rulesUpdated });
+                RuleUpdated(this, new RuleEventArgs() { rules = rulesUpdated, jsonPath=jsonPath });
         }
         public void DeleteRule(object rule)
         {
@@ -153,6 +157,44 @@ namespace FolderChecker.ViewModel
         {
             _messageSender.GetEmailAdress();
             _messageSender.GetPassword();
+        }
+        public void Settings()
+        {
+
+        }
+        private void LoadSettings()
+        {
+            if (Properties.Settings.Default.PathToJson==string.Empty)
+            {
+                Properties.Settings.Default.PathToJson = ChooseFolder();
+                Properties.Settings.Default.Save();
+                jsonPath = Properties.Settings.Default.PathToJson;
+            }
+            else if (!Directory.Exists(Properties.Settings.Default.PathToJson))
+            {
+                Properties.Settings.Default.PathToJson = ChooseFolder();
+                Properties.Settings.Default.Save();
+                jsonPath = Properties.Settings.Default.PathToJson;
+            }
+            else
+            {
+                jsonPath= Properties.Settings.Default.PathToJson;
+            }
+        }
+        private string ChooseFolder()
+        {
+            MessageBox.Show("Wybierz ścieżkę, gdzie mają zostać zapisane dane programu");
+
+            var dialog = new CommonOpenFileDialog()
+            {
+                IsFolderPicker = true,
+                Title = "Select folder..."
+            };
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                return dialog.FileName;
+            }
+            return dialog.FileName;
         }
     }
 }

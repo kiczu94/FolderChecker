@@ -7,5 +7,6 @@ namespace FolderChecker.Model
     {
         public Rule rule { get; set; }
         public List<Rule> rules { get; set; }
+        public string jsonPath { get; set; }
     }
 }

@@ -7,19 +7,24 @@ namespace FolderChecker.Model
 {
     public static class JSONoperations
     {
-        private static void CreateListOfRulesJSON(List<Rule> rules)
+        private static void CreateListOfRulesJSON(List<Rule> rules, string path)
         {
             string json = JsonConvert.SerializeObject(rules);
-            File.WriteAllText(@"C:\Users\tomasz.tkocz\Desktop\FolderChecker\FolderChecker\bin\jsony próbne\rule.json", json);
+            File.WriteAllText(path, json);
         }
         public static void onRuleUpdated(object source, RuleEventArgs ruleEventArgs)
         {
-            CreateListOfRulesJSON(ruleEventArgs.rules);
+            CreateListOfRulesJSON(ruleEventArgs.rules, ruleEventArgs.jsonPath);
         }
-        public static ObservableCollection<Rule> loadRules()
+        public static ObservableCollection<Rule> loadRules(string path)
         {
-            string json = File.ReadAllText(@"C:\Users\tomasz.tkocz\Desktop\FolderChecker\FolderChecker\bin\jsony próbne\rule.json");
+            string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<ObservableCollection<Rule>>(json);
+        }
+        public static string LoadSettings(string jsonPath)
+        {
+            string json = File.ReadAllText(jsonPath);
+            return json;
         }
 
     }
