@@ -50,6 +50,71 @@ namespace FolderChecker.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public EditRuleWindowViewModel()
         {}
+        private List<string> ConvertObjectToList(object choosenMailToEdit)
+        {
+            List<Object> collection = new List<Object>((IEnumerable<Object>)choosenMailToEdit);
+            List<string> mailAdresses = new List<string>();
+            if (collection.Count != 0)
+            {
+                foreach (var item in collection)
+                {
+                    mailAdresses.Add(item.ToString());
+                }
+            }
+            return mailAdresses;
+        }
+        private ObservableCollection<string> ConvertListToCollection(List<string> listToConvert)
+        {
+            ObservableCollection<string> vs = new ObservableCollection<string>();
+            foreach (var item in listToConvert)
+            {
+                vs.Add(item);
+            }
+            return vs;
+        }
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private void AddEmail()
+        {
+            AddEmailAdressWindow addEmailAdressWindow = new AddEmailAdressWindow();
+            addEmailAdressWindow.ShowDialog();
+            foreach (var mail in addEmailAdressWindow.Export())
+            {
+                MyRuleToEdit.myMailAdresses.Add(mail);
+            }
+            MyMailAdresses = ConvertListToCollection(MyRuleToEdit.myMailAdresses);
+            OnPropertyChanged("MyMailAdresses");
+        }
+        private void EditEmail(object choosenMailToEdit)
+        {
+            List<string> mailsToEdit = ConvertObjectToList(choosenMailToEdit);
+            if (mailsToEdit.Count != 0)
+            {
+                for (int i = 0; i < mailsToEdit.Count; i++)
+                {
+                    EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowy adres mail", mailsToEdit[i]);
+                    editSimpleText.ShowDialog();
+                    for (int j = 0; j < MyRuleToEdit.myMailAdresses.Count; j++)
+                    {
+                        if (MyRuleToEdit.myMailAdresses[j] == editSimpleText.editSimpleTextViewModel.MyOldText)
+                        {
+                            if (editSimpleText.editSimpleTextViewModel.MyNewText == null)
+                            {
+                                MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyOldText;
+                            }
+                            else
+                            {
+                                MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
+                                MyMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
+                            }
+                        }
+                    }
+                }
+                OnPropertyChanged("MyMailAdresses");
+            }
+        }
         public void onClosed(object source, EventArgs args)
         {
             MyRuleToEdit.myRuleName = MyRuleName;
@@ -93,70 +158,6 @@ namespace FolderChecker.ViewModel
                 MyRulePath = openFileDialog.FileName;
             }
         }
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        private List<string> ConvertObjectToList(object choosenMailToEdit)
-        {
-            List<Object> collection = new List<Object>((IEnumerable<Object>)choosenMailToEdit);
-            List<string> mailAdresses = new List<string>();
-            if (collection.Count != 0)
-            {
-                foreach (var item in collection)
-                {
-                    mailAdresses.Add(item.ToString());
-                }
-            }
-            return mailAdresses;
-        }
-        private ObservableCollection<string> ConvertListToCollection(List<string> listToConvert)
-        {
-            ObservableCollection<string> vs = new ObservableCollection<string>();
-            foreach (var item in listToConvert)
-            {
-                vs.Add(item);
-            }
-            return vs;
-        }
-        private void AddEmail()
-        {
-            AddEmailAdressWindow addEmailAdressWindow = new AddEmailAdressWindow();
-            addEmailAdressWindow.ShowDialog();
-            foreach (var mail in addEmailAdressWindow.Export())
-            {
-                MyRuleToEdit.myMailAdresses.Add(mail);
-            }
-            MyMailAdresses = ConvertListToCollection(MyRuleToEdit.myMailAdresses);
-            OnPropertyChanged("MyMailAdresses");
-        }
-        private void EditEmail(object choosenMailToEdit)
-        {
-            List<string> mailsToEdit = ConvertObjectToList(choosenMailToEdit);
-            if (mailsToEdit.Count != 0)
-            {
-                for (int i = 0; i < mailsToEdit.Count; i++)
-                {
-                    EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowy adres mail", mailsToEdit[i]);
-                    editSimpleText.ShowDialog();
-                    for (int j = 0; j < MyRuleToEdit.myMailAdresses.Count; j++)
-                    {
-                        if (MyRuleToEdit.myMailAdresses[j] == editSimpleText.editSimpleTextViewModel.MyOldText)
-                        {
-                            if (editSimpleText.editSimpleTextViewModel.MyNewText==null)
-                            {
-                                MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyOldText;
-                            }
-                            else
-                            {
-                                MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
-                                MyMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
-                            }
-                        }
-                    }
-                }
-                OnPropertyChanged("MyMailAdresses");
-            }
-        }
+
     }
 }

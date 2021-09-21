@@ -41,11 +41,11 @@ namespace FolderChecker.ViewModel
                 }
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
         public AddEmailAdressViewModel()
         {
             MyMailAdressesCollection = new ObservableCollection<string>();
         }
+        public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

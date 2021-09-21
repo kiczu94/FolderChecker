@@ -10,14 +10,15 @@ namespace FolderChecker.Model
         public bool isContainer = false;
         private static long lastID;
         private long _ruleID;
+        private string _ruleName;
+        private string _pathToTrack;
+        private string _AdressMailString;
+        private List<string> _MailAdresses = new List<string>();
         public long myRuleID
         {
             get { return _ruleID; }
             set { _ruleID = value; }
         }
-        private string _ruleName;
-        private List<string> _MailAdresses = new List<string>();
-        private string _pathToTrack;
         public List<string> myMailAdresses
         {
             get
@@ -50,8 +51,6 @@ namespace FolderChecker.Model
                 OnPropertyChanged();
             }
         }
-        private string _AdressMailString;
-        public event PropertyChangedEventHandler PropertyChanged;
         public string MyAdressMailstring
         {
             set
@@ -75,6 +74,7 @@ namespace FolderChecker.Model
                 return _AdressMailString;
             }
         }
+        public event PropertyChangedEventHandler PropertyChanged;
         public Rule(string name, string pathToTrack, List<string> mailAdresses)
         {
             _ruleName = name;
@@ -96,13 +96,13 @@ namespace FolderChecker.Model
         {
             _MailAdresses.Add(emailAdress);
         }
-        private static long GetID()
-        {
-            return lastID += 1;
-        }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private static long GetID()
+        {
+            return lastID += 1;
         }
     }
 }

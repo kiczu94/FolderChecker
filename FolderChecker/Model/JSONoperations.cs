@@ -26,6 +26,5 @@ namespace FolderChecker.Model
             string json = File.ReadAllText(jsonPath);
             return json;
         }
-
     }
 }

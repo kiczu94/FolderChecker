@@ -51,6 +51,25 @@ namespace FolderChecker.Model
             }
 
         }
+        private void SendMessage(MimeMessage message)
+        {
+            SmtpClient smtp = new SmtpClient();
+            try
+            {
+                smtp.Connect("smtp.gmail.com", 465, true);
+                smtp.Authenticate(_emailAdress, _password);
+                smtp.Send(message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                smtp.Disconnect(true);
+                smtp.Dispose();
+            }
+        }
         private string CreateText(WatcherInvokedEventArgs args)
         {
             string textToreturn = string.Empty;
@@ -69,6 +88,11 @@ namespace FolderChecker.Model
                     break;
             }
             return textToreturn;
+        }
+        private string GetFolderPath(WatcherInvokedEventArgs args)
+        {
+            string text = args.FullPath.Remove(args.FullPath.LastIndexOf('\\'), args.FullPath.Length - args.FullPath.LastIndexOf('\\'));
+            return text;
         }
         private MimeMessage GetMimeMessage(object source, WatcherInvokedEventArgs args, string textToSend)
         {
@@ -101,29 +125,6 @@ namespace FolderChecker.Model
             }
             return fileWatcher;
         }
-        private void SendMessage(MimeMessage message)
-        {
-            SmtpClient smtp = new SmtpClient();
-            try
-            {
-                smtp.Connect("smtp.gmail.com", 465, true);
-                smtp.Authenticate(_emailAdress, _password);
-                smtp.Send(message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                smtp.Disconnect(true);
-                smtp.Dispose();
-            }
-        }
-        private string GetFolderPath(WatcherInvokedEventArgs args)
-        {
-            string text = args.FullPath.Remove(args.FullPath.LastIndexOf('\\'), args.FullPath.Length - args.FullPath.LastIndexOf('\\'));
-            return text;
-        }
+
     }
 }

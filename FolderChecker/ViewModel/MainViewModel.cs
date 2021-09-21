@@ -50,19 +50,6 @@ namespace FolderChecker.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private List<Rule> ConvertObjectToList(object choosenRulesToEdit)
-        {
-            List<Object> collection = new List<Object>((IEnumerable<Object>)choosenRulesToEdit);
-            List<Rule> rules = new List<Rule>();
-            if (collection.Count != 0)
-            {
-                foreach (var item in collection)
-                {
-                    rules.Add((Rule)item);
-                }
-            }
-            return rules;
-        }
         private void UpdateCollection(List<Rule> rules)
         {
             foreach (var rule in rules)
@@ -107,6 +94,53 @@ namespace FolderChecker.ViewModel
                     }
                 }
             }
+        }
+        private void LoadSettings()
+        {
+            if (Properties.Settings.Default.PathToJson == string.Empty)
+            {
+                Properties.Settings.Default.PathToJson = ChooseFolder();
+                Properties.Settings.Default.Save();
+                jsonPath = Properties.Settings.Default.PathToJson;
+            }
+            else if (!Directory.Exists(Properties.Settings.Default.PathToJson))
+            {
+                Properties.Settings.Default.PathToJson = ChooseFolder();
+                Properties.Settings.Default.Save();
+                jsonPath = Properties.Settings.Default.PathToJson;
+            }
+            else
+            {
+                jsonPath = Properties.Settings.Default.PathToJson;
+            }
+        }
+        private List<Rule> ConvertObjectToList(object choosenRulesToEdit)
+        {
+            List<Object> collection = new List<Object>((IEnumerable<Object>)choosenRulesToEdit);
+            List<Rule> rules = new List<Rule>();
+            if (collection.Count != 0)
+            {
+                foreach (var item in collection)
+                {
+                    rules.Add((Rule)item);
+                }
+            }
+            return rules;
+        }
+        private string ChooseFolder()
+        {
+            MessageBox.Show("Wybierz ścieżkę, gdzie mają zostać zapisane dane programu");
+
+            var dialog = new CommonOpenFileDialog()
+            {
+                IsFolderPicker = true,
+                Title = "Select folder..."
+            };
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                return dialog.FileName;
+            }
+            return dialog.FileName;
         }
         protected virtual void onRuleUpdated(List<Rule> rulesUpdated)
         {
@@ -162,39 +196,6 @@ namespace FolderChecker.ViewModel
         {
 
         }
-        private void LoadSettings()
-        {
-            if (Properties.Settings.Default.PathToJson==string.Empty)
-            {
-                Properties.Settings.Default.PathToJson = ChooseFolder();
-                Properties.Settings.Default.Save();
-                jsonPath = Properties.Settings.Default.PathToJson;
-            }
-            else if (!Directory.Exists(Properties.Settings.Default.PathToJson))
-            {
-                Properties.Settings.Default.PathToJson = ChooseFolder();
-                Properties.Settings.Default.Save();
-                jsonPath = Properties.Settings.Default.PathToJson;
-            }
-            else
-            {
-                jsonPath= Properties.Settings.Default.PathToJson;
-            }
-        }
-        private string ChooseFolder()
-        {
-            MessageBox.Show("Wybierz ścieżkę, gdzie mają zostać zapisane dane programu");
 
-            var dialog = new CommonOpenFileDialog()
-            {
-                IsFolderPicker = true,
-                Title = "Select folder..."
-            };
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                return dialog.FileName;
-            }
-            return dialog.FileName;
-        }
     }
 }

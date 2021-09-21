@@ -63,10 +63,6 @@ namespace FolderChecker.ViewModel
             ruleIDtoEdit = new List<long>();
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public void ChooseFolder()
         {
             var dialog = new CommonOpenFileDialog()
@@ -108,6 +104,10 @@ namespace FolderChecker.ViewModel
             _workingRule.myRuleName = MyRuleName;
             _workingRule.myPathToTrack = MyRulePath;
 
+        }
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         private ObservableCollection<string> ConverseCollection(List<string> listToConverse)
         {
