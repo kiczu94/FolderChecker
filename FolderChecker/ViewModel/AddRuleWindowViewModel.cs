@@ -65,26 +65,12 @@ namespace FolderChecker.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public void ChooseFolder()
         {
-            var dialog = new CommonOpenFileDialog()
-            {
-                IsFolderPicker = true,
-                Title = "Select folder..."
-            };
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                _workingRule.myPathToTrack = dialog.FileName;
-                MyRulePath = dialog.FileName;
-            }
+            MyRulePath = HelpClass.ChooseFolder();
         }
         public void ChooseFile()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                _workingRule.myPathToTrack = openFileDialog.FileName;
-                MyRulePath = openFileDialog.FileName;
-            }
+            _workingRule.myPathToTrack = HelpClass.ChooseFile();
+            MyRulePath = _workingRule.myPathToTrack;
         }
         public void AddMail()
         {

@@ -139,24 +139,11 @@ namespace FolderChecker.ViewModel
         }
         public void EditChoosenFolder()
         {
-            var dialog = new CommonOpenFileDialog()
-            {
-                IsFolderPicker = true,
-                Title = "Select folder..."
-            };
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                MyRulePath = dialog.FileName;
-            }
+            MyRulePath = HelpClass.ChooseFolder();
         }
         public void EditChoosenFile()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                MyRulePath = openFileDialog.FileName;
-            }
+            MyRulePath = HelpClass.ChooseFile();
         }
 
     }

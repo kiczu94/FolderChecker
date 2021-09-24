@@ -99,13 +99,14 @@ namespace FolderChecker.ViewModel
         {
             if (Properties.Settings.Default.PathToJson == string.Empty)
             {
-                Properties.Settings.Default.PathToJson = ChooseFolder();
+                MessageBox.Show("Wybierz ścieżkę, gdzie mają zostać zapisane dane programu");
+                Properties.Settings.Default.PathToJson = HelpClass.ChooseFolder();
                 Properties.Settings.Default.Save();
                 jsonPath = Properties.Settings.Default.PathToJson;
             }
             else if (!Directory.Exists(Properties.Settings.Default.PathToJson))
             {
-                Properties.Settings.Default.PathToJson = ChooseFolder();
+                Properties.Settings.Default.PathToJson = HelpClass.ChooseFolder();
                 Properties.Settings.Default.Save();
                 jsonPath = Properties.Settings.Default.PathToJson;
             }
@@ -126,21 +127,6 @@ namespace FolderChecker.ViewModel
                 }
             }
             return rules;
-        }
-        private string ChooseFolder()
-        {
-            MessageBox.Show("Wybierz ścieżkę, gdzie mają zostać zapisane dane programu");
-
-            var dialog = new CommonOpenFileDialog()
-            {
-                IsFolderPicker = true,
-                Title = "Select folder..."
-            };
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                return dialog.FileName;
-            }
-            return dialog.FileName;
         }
         protected virtual void onRuleUpdated(List<Rule> rulesUpdated)
         {
@@ -196,6 +182,5 @@ namespace FolderChecker.ViewModel
         {
             
         }
-
     }
 }
