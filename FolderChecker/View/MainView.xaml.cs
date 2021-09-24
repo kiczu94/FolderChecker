@@ -32,12 +32,26 @@ namespace FolderChecker.View
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            mainViewModel.Login();
+            mainViewModel.Login(passwordBox1.Password);
+            if (mainViewModel.isEmailCorrect)
+            {
+                LoginPanel.Visibility = Visibility.Visible;
+                Login.Visibility = Visibility.Collapsed;
+                EmailTextBlock.Visibility = Visibility.Visible;
+                EmailTextBox.Visibility = Visibility.Collapsed;
+                passwordBox1.Visibility = Visibility.Collapsed;
+                PasswordTextBlock.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageBox.Show("Nieprawidłowy email lub hasło!");
+            }
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             mainViewModel.Settings();
         }
+
     }
 }

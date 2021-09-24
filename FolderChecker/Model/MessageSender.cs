@@ -33,12 +33,6 @@ namespace FolderChecker.Model
             editSimpleText.ShowDialog();
             MyEmailAdressSender = editSimpleText.GetNewText();
         }
-        public void GetPassword()
-        {
-            GetPasswordWindow passwordWindow = new GetPasswordWindow();
-            passwordWindow.ShowDialog();
-            MyPassword = passwordWindow.passwordBox1.Password;
-        }
         public void onWatcherInvoked(object source, WatcherInvokedEventArgs args)
         {
             if (_password != null && _emailAdress != null)
@@ -125,6 +119,26 @@ namespace FolderChecker.Model
             }
             return fileWatcher;
         }
-
+        public bool TryLoggin()
+        {
+            bool isEmailAndPasswordCorrect = false;
+            SmtpClient smtp = new SmtpClient();
+            try
+            {
+                smtp.Connect("smtp.gmail.com", 465, true);
+                smtp.Authenticate(_emailAdress, _password);
+                isEmailAndPasswordCorrect = true;
+            }
+            catch (Exception)
+            {
+                isEmailAndPasswordCorrect = false;
+            }
+            finally
+            {
+                smtp.Disconnect(true);
+                smtp.Dispose();
+            }
+            return isEmailAndPasswordCorrect;
+        }
     }
 }

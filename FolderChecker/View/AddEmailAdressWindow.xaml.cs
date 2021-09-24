@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using FolderChecker.ViewModel;
 
 
 namespace FolderChecker.View
@@ -9,7 +10,7 @@ namespace FolderChecker.View
     /// </summary>
     public partial class AddEmailAdressWindow : Window
     {
-        ViewModel.AddEmailAdressViewModel addEmailAdress = new ViewModel.AddEmailAdressViewModel();
+        AddEmailAdressViewModel addEmailAdress = new AddEmailAdressViewModel();
         public AddEmailAdressWindow()
         {
             InitializeComponent();
@@ -20,7 +21,6 @@ namespace FolderChecker.View
         {
             addEmailAdress.AddEmail();
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {            
             this.Close();

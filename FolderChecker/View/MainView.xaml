@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FolderChecker.View"
         mc:Ignorable="d"
-        Title="FolderChecker" Height="500" Width="845"
+        Title="FolderChecker" Height="500" Width="1550"
         >
     <Window.Resources>
         <DataTemplate x:Key="WrapCell">
@@ -30,7 +30,7 @@
         </Grid.ColumnDefinitions>
         <WrapPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="4">
             <ListView 
-                MaxWidth="1000"
+                MaxWidth="1500"
             Margin="10" 
             x:Name="ruleDetails" 
             HorizontalAlignment="Left"
@@ -46,15 +46,14 @@
                 <ListView.View>
                     <GridView AllowsColumnReorder="True"
                           ColumnHeaderToolTip="Szczegóły reguł">
-                        
                         <GridViewColumn
-                        Width="50"
+                        Width="100"
                         DisplayMemberBinding="{Binding Path=myRuleName}" 
                         >
                             <GridViewColumnHeader Content="Nazwa" MaxWidth="100"></GridViewColumnHeader>
                         </GridViewColumn>
                         <GridViewColumn
-                        Width="200"
+                        Width="500"
                         DisplayMemberBinding="{Binding Path=myPathToTrack}" 
                         Header="Ścieżka"
                             >
@@ -104,15 +103,6 @@
                 Width="150"
                 Content="Edytuj..." Click="EditButton_Click"></Button>
                 <Button
-                x:Name="Login"
-                Margin="10"
-                Grid.Column="4"
-                Grid.Row="2"
-                Height="40"
-                Width="150"
-                Content="Zaloguj" Click="Login_Click" 
-                    ></Button>
-                <Button
                 x:Name="Settings"
                 Margin="10"
                 Grid.Column="4"
@@ -122,6 +112,85 @@
                 Content="Ustawienia..." Click="Settings_Click"
                     ></Button>
             </StackPanel>
+            <StackPanel>
+                <StackPanel Width="300">
+                    <WrapPanel Width="270" Margin="0,10,0,0">
+                        <TextBlock 
+                            Height="30" 
+                            Text="Email:" 
+                            HorizontalAlignment="Center" 
+                            TextAlignment="Center"
+                            />
+                        <TextBlock
+                            Height="30" 
+                            Width="200" 
+                            Margin="39,0,0,0"
+                            Text="{Binding MySenderEmail}"
+                            Visibility="Collapsed"
+                            Name="EmailTextBlock"></TextBlock>
+                        <TextBox 
+                            Height="30" 
+                            Width="200" 
+                            Margin="39,0,0,0"
+                            Text="{Binding MySenderEmail}"
+                            Name="EmailTextBox"
+                            Visibility="Visible"/>
+                    </WrapPanel>
+                    <WrapPanel Width="270" Margin="0,10,0,0">
+                        <TextBlock Height="30" 
+                                   Text="Password:"
+                                   HorizontalAlignment="Center" 
+                                   TextAlignment="Center"/>
+                        <TextBlock
+                            Height="30" 
+                            Width="200" 
+                            Margin="17,0,0,0"
+                            Text="{Binding MyPasswordTextBlock}"
+                            Visibility="Collapsed"
+                            Name="PasswordTextBlock"></TextBlock>
+                        <PasswordBox
+                            Margin="17,0,0,0"
+                            Height="30"
+                            Width="200"
+                            Name="passwordBox1"
+                            MaxLength="25" 
+                            PasswordChar="*"
+                            Visibility="Visible"
+                            ></PasswordBox>
+                    </WrapPanel>
+                    <Button
+                        x:Name="Login"
+                        Margin="84,10,66,0"
+                        Grid.Column="4"
+                        Grid.Row="2"
+                        Height="40"
+                        Width="150"
+                        Content="Zaloguj" 
+                        Click="Login_Click" 
+                        Visibility="Visible"
+                    ></Button>
+                </StackPanel>
+                <StackPanel 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed"
+                    Name="LoginPanel"
+                    Margin="69,10,0,0">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,0"
+                        Height="20" 
+                        Width="70" 
+                        Text="Zalogowano!"></TextBlock>
+                    <ProgressBar 
+                        Height="30" 
+                        Width="200" 
+                        Name="pbLogin" 
+                        Value="{Binding isEmailCorrectValue}"/>
+                </StackPanel>
+            </StackPanel>
+
         </WrapPanel>
     </Grid>
 </Window>

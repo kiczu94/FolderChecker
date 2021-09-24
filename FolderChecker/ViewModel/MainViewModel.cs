@@ -14,10 +14,19 @@ namespace FolderChecker.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private string _senderEmail;
+        public int isEmailCorrectValue { get; set; }
+        public bool isEmailCorrect { get; set; }
         private List<Rule> rulesToDelete = new List<Rule>();
         private MessageSender _messageSender = new MessageSender();
         private string jsonPath;
         private ObservableCollection<Rule> _rulesCollection;
+        public string MySenderEmail
+        {
+            get { return _senderEmail; }
+            set { _senderEmail = value; }
+        }
+        public string MyPasswordTextBlock { get; set; }
         public ObservableCollection<Rule> MyRulesCollection
         {
             get { return _rulesCollection; }
@@ -214,10 +223,22 @@ namespace FolderChecker.ViewModel
             }
             onRuleUpdated(MyRulesCollection.ToList());
         }
-        public void Login()
+        public void Login(string password)
         {
-            _messageSender.GetEmailAdress();
-            _messageSender.GetPassword();
+            _messageSender.MyPassword = password;
+            _messageSender.MyEmailAdressSender = MySenderEmail;
+            if (_messageSender.TryLoggin())
+            {
+                isEmailCorrectValue = 100;
+                isEmailCorrect = true;
+                for (int i = 0; i < password.Length; i++)
+                {
+                    MyPasswordTextBlock += '*';
+                }
+                OnPropertyChanged("isEmailCorrectValue");
+                OnPropertyChanged("MySenderEmail");
+                OnPropertyChanged("MyPasswordTextBlock");
+            }
         }
         public void Settings()
         {
