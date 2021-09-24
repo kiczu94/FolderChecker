@@ -14,6 +14,7 @@ namespace FolderChecker.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private List<Rule> rulesToDelete = new List<Rule>();
         private MessageSender _messageSender = new MessageSender();
         private string jsonPath;
         private ObservableCollection<Rule> _rulesCollection;
@@ -29,15 +30,8 @@ namespace FolderChecker.ViewModel
         public MainViewModel()
         {
             LoadSettings();
-            if (File.Exists(jsonPath+"\\rule.json"))
-            {
-                MyRulesCollection = JSONoperations.loadRules(jsonPath + "\\rule.json");
-            }
-            else
-            {
-                MyRulesCollection = new ObservableCollection<Rule>();
-            }
-            FileWatcher fileWatcher = new FileWatcher(MyRulesCollection.ToList());
+            LoadRules();
+            FileWatcher fileWatcher = new FileWatcher(CheckRules());
             fileWatcher.FileRenamed += onFileRenamed;
             RuleUpdated += fileWatcher.onRuleUpdated;
             RuleUpdated += JSONoperations.onRuleUpdated;
@@ -114,6 +108,47 @@ namespace FolderChecker.ViewModel
             {
                 jsonPath = Properties.Settings.Default.PathToJson;
             }
+        }
+        private void LoadRules()
+        {
+            if (File.Exists(jsonPath + "\\rule.json"))
+            {
+                MyRulesCollection = JSONoperations.loadRules(jsonPath + "\\rule.json");
+            }
+            else
+            {
+                MyRulesCollection = new ObservableCollection<Rule>();
+            }
+        }
+        private List<Rule> CheckRules()
+        {
+            List<Rule> listToReturn = new List<Rule>();
+            foreach (var rule in MyRulesCollection)
+            {
+                if (File.Exists(rule.myPathToTrack))
+                {
+                    listToReturn.Add(rule);
+                }
+                else if (Directory.Exists(rule.myPathToTrack))
+                {
+                    listToReturn.Add(rule);
+                }
+                else if (rule.myPathToTrack==string.Empty)
+                {
+                    listToReturn.Add(rule);
+                }
+                else
+                {
+                    rulesToDelete.Add(rule);
+                    MessageBox.Show($"Ścieżka {rule.myPathToTrack} nie istnieje. Usunięto regułę.");
+                }
+            }
+            foreach (var rule in rulesToDelete)
+            {
+                MyRulesCollection.Remove(rule);
+            }
+            rulesToDelete.Clear();
+            return listToReturn;
         }
         private List<Rule> ConvertObjectToList(object choosenRulesToEdit)
         {

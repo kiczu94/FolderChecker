@@ -10,7 +10,7 @@ namespace FolderChecker.Model
         private static void CreateListOfRulesJSON(List<Rule> rules, string path)
         {
             string json = JsonConvert.SerializeObject(rules);
-            File.WriteAllText(path, json);
+            File.WriteAllText(path+"\\rule.json", json);
         }
         public static void onRuleUpdated(object source, RuleEventArgs ruleEventArgs)
         {
