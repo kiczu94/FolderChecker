@@ -31,10 +31,10 @@ namespace FolderChecker.ViewModel
         {
             LoadSettings();
             LoadRules();
+            RuleUpdated += JSONoperations.onRuleUpdated;
             FileWatcher fileWatcher = new FileWatcher(CheckRules());
             fileWatcher.FileRenamed += onFileRenamed;
             RuleUpdated += fileWatcher.onRuleUpdated;
-            RuleUpdated += JSONoperations.onRuleUpdated;
             fileWatcher.WatcherInvoked += _messageSender.onWatcherInvoked;
         }
         public delegate void RuleUpdatedEventHandler(object source, RuleEventArgs args);
@@ -122,6 +122,7 @@ namespace FolderChecker.ViewModel
         }
         private List<Rule> CheckRules()
         {
+            bool ruleUpdated=false;
             List<Rule> listToReturn = new List<Rule>();
             foreach (var rule in MyRulesCollection)
             {
@@ -141,11 +142,16 @@ namespace FolderChecker.ViewModel
                 {
                     rulesToDelete.Add(rule);
                     MessageBox.Show($"Ścieżka {rule.myPathToTrack} nie istnieje. Usunięto regułę.");
+                    ruleUpdated = true;
                 }
             }
             foreach (var rule in rulesToDelete)
             {
                 MyRulesCollection.Remove(rule);
+            }
+            if (ruleUpdated==true)
+            {
+                onRuleUpdated(MyRulesCollection.ToList());
             }
             rulesToDelete.Clear();
             return listToReturn;
