@@ -15,8 +15,8 @@ namespace FolderChecker.ViewModel
     public class MainViewModel : INotifyPropertyChanged
     {
         private string _senderEmail;
-        public int isEmailCorrectValue { get; set; }
-        public bool isEmailCorrect { get; set; }
+        public int IsEmailCorrectValue { get; set; }
+        public bool IsEmailCorrect { get; set; }
         private List<Rule> rulesToDelete = new List<Rule>();
         private MessageSender _messageSender = new MessageSender();
         private string jsonPath;
@@ -40,11 +40,11 @@ namespace FolderChecker.ViewModel
         {
             LoadSettings();
             LoadRules();
-            RuleUpdated += JSONoperations.onRuleUpdated;
+            RuleUpdated += JSONoperations.OnRuleUpdated;
             FileWatcher fileWatcher = new FileWatcher(CheckRules());
-            fileWatcher.FileRenamed += onFileRenamed;
-            RuleUpdated += fileWatcher.onRuleUpdated;
-            fileWatcher.WatcherInvoked += _messageSender.onWatcherInvoked;
+            fileWatcher.FileRenamed += OnFileRenamed;
+            RuleUpdated += fileWatcher.OnRuleUpdated;
+            fileWatcher.WatcherInvoked += _messageSender.OnWatcherInvoked;
         }
         public delegate void RuleUpdatedEventHandler(object source, RuleEventArgs args);
         public event PropertyChangedEventHandler PropertyChanged;
@@ -59,7 +59,7 @@ namespace FolderChecker.ViewModel
             {
                 for (int i = 0; i < MyRulesCollection.Count; i++)
                 {
-                    if (rule.myRuleID == MyRulesCollection[i].myRuleID)
+                    if (rule.MyRuleID == MyRulesCollection[i].MyRuleID)
                     {
                         MyRulesCollection[i] = rule;
                         MyRulesCollection[i].MyAdressMailstring = "";
@@ -67,22 +67,22 @@ namespace FolderChecker.ViewModel
                 }
             }
         }
-        private void onFileRenamed(object source, RenamedEventArgs args)
+        private void OnFileRenamed(object source, RenamedEventArgs args)
         {
             foreach (var rule in MyRulesCollection)
             {
-                if (rule.myPathToTrack == args.OldFullPath && Path.HasExtension(rule.myPathToTrack))
+                if (rule.MyPathToTrack == args.OldFullPath && Path.HasExtension(rule.MyPathToTrack))
                 {
-                    rule.myPathToTrack = args.FullPath;
+                    rule.MyPathToTrack = args.FullPath;
                 }
-                else if (rule.myPathToTrack.Contains(args.OldFullPath))
+                else if (rule.MyPathToTrack.Contains(args.OldFullPath))
                 {
-                    string fileName = rule.myPathToTrack.Remove(0, args.OldFullPath.Length);
+                    string fileName = rule.MyPathToTrack.Remove(0, args.OldFullPath.Length);
                     string newPath = args.FullPath + fileName;
-                    rule.myPathToTrack = newPath;
+                    rule.MyPathToTrack = newPath;
                 }
             }
-            onRuleUpdated(MyRulesCollection.ToList());
+            OnRuleUpdated(MyRulesCollection.ToList());
         }
         private void EditRules(AddRuleWindowViewModel viewModel)
         {
@@ -90,9 +90,9 @@ namespace FolderChecker.ViewModel
             {
                 foreach (var rule in MyRulesCollection)
                 {
-                    if (rule.myRuleID == viewModel.ruleIDtoEdit[i])
+                    if (rule.MyRuleID == viewModel.ruleIDtoEdit[i])
                     {
-                        rule.myMailAdresses.Remove(viewModel.adressesToDelete[i]);
+                        rule.MyMailAdresses.Remove(viewModel.adressesToDelete[i]);
                         rule.MyAdressMailstring = "";
                     }
                 }
@@ -122,7 +122,7 @@ namespace FolderChecker.ViewModel
         {
             if (File.Exists(jsonPath + "\\rule.json"))
             {
-                MyRulesCollection = JSONoperations.loadRules(jsonPath + "\\rule.json");
+                MyRulesCollection = JSONoperations.LoadRules(jsonPath + "\\rule.json");
             }
             else
             {
@@ -135,22 +135,22 @@ namespace FolderChecker.ViewModel
             List<Rule> listToReturn = new List<Rule>();
             foreach (var rule in MyRulesCollection)
             {
-                if (File.Exists(rule.myPathToTrack))
+                if (File.Exists(rule.MyPathToTrack))
                 {
                     listToReturn.Add(rule);
                 }
-                else if (Directory.Exists(rule.myPathToTrack))
+                else if (Directory.Exists(rule.MyPathToTrack))
                 {
                     listToReturn.Add(rule);
                 }
-                else if (rule.myPathToTrack==string.Empty)
+                else if (rule.MyPathToTrack==string.Empty)
                 {
                     listToReturn.Add(rule);
                 }
                 else
                 {
                     rulesToDelete.Add(rule);
-                    MessageBox.Show($"Ścieżka {rule.myPathToTrack} nie istnieje. Usunięto regułę.");
+                    MessageBox.Show($"Ścieżka {rule.MyPathToTrack} nie istnieje. Usunięto regułę.");
                     ruleUpdated = true;
                 }
             }
@@ -160,7 +160,7 @@ namespace FolderChecker.ViewModel
             }
             if (ruleUpdated==true)
             {
-                onRuleUpdated(MyRulesCollection.ToList());
+                OnRuleUpdated(MyRulesCollection.ToList());
             }
             rulesToDelete.Clear();
             return listToReturn;
@@ -178,10 +178,9 @@ namespace FolderChecker.ViewModel
             }
             return rules;
         }
-        protected virtual void onRuleUpdated(List<Rule> rulesUpdated)
+        protected virtual void OnRuleUpdated(List<Rule> rulesUpdated)
         {
-            if (RuleUpdated != null)
-                RuleUpdated(this, new RuleEventArgs() { rules = rulesUpdated, jsonPath=jsonPath });
+            RuleUpdated?.Invoke(this, new RuleEventArgs() { rules = rulesUpdated, jsonPath = jsonPath });
         }
         public void DeleteRule(object rule)
         {
@@ -191,7 +190,7 @@ namespace FolderChecker.ViewModel
                 {
                     Rule newRule = (Rule)rule;
                     MyRulesCollection.Remove(newRule);
-                    onRuleUpdated(MyRulesCollection.ToList());
+                    OnRuleUpdated(MyRulesCollection.ToList());
                 }
             }
         }
@@ -200,12 +199,12 @@ namespace FolderChecker.ViewModel
             AddRuleWindow addRuleWindow = new AddRuleWindow(MyRulesCollection.ToList());
             addRuleWindow.ShowDialog();
             Rule ruleToAdd = addRuleWindow.GetRule();
-            if (ruleToAdd.myRuleName != null && ruleToAdd.myPathToTrack != null && ruleToAdd.myMailAdresses != null)
+            if (ruleToAdd.MyRuleName != null && ruleToAdd.MyPathToTrack != null && ruleToAdd.MyMailAdresses != null)
             {
                 //Function edit rules to avoid sending to the same person multiple times same message about change in folder
                 EditRules(addRuleWindow.AddRuleWindowViewModel);
                 MyRulesCollection.Add(ruleToAdd);
-                onRuleUpdated(MyRulesCollection.ToList());
+                OnRuleUpdated(MyRulesCollection.ToList());
             }
         }
         public void EditRule(object choosenRulesToEdit)
@@ -221,7 +220,7 @@ namespace FolderChecker.ViewModel
                 }
                 UpdateCollection(rules);
             }
-            onRuleUpdated(MyRulesCollection.ToList());
+            OnRuleUpdated(MyRulesCollection.ToList());
         }
         public void Login(string password)
         {
@@ -229,8 +228,8 @@ namespace FolderChecker.ViewModel
             _messageSender.MyEmailAdressSender = MySenderEmail;
             if (_messageSender.TryLoggin())
             {
-                isEmailCorrectValue = 100;
-                isEmailCorrect = true;
+                IsEmailCorrectValue = 100;
+                IsEmailCorrect = true;
                 for (int i = 0; i < password.Length; i++)
                 {
                     MyPasswordTextBlock += '*';

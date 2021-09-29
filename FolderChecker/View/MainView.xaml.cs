@@ -33,7 +33,7 @@ namespace FolderChecker.View
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             mainViewModel.Login(passwordBox1.Password);
-            if (mainViewModel.isEmailCorrect)
+            if (mainViewModel.IsEmailCorrect)
             {
                 LoginPanel.Visibility = Visibility.Visible;
                 Login.Visibility = Visibility.Collapsed;

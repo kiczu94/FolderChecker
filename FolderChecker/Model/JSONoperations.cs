@@ -12,11 +12,11 @@ namespace FolderChecker.Model
             string json = JsonConvert.SerializeObject(rules);
             File.WriteAllText(path+"\\rule.json", json);
         }
-        public static void onRuleUpdated(object source, RuleEventArgs ruleEventArgs)
+        public static void OnRuleUpdated(object source, RuleEventArgs ruleEventArgs)
         {
             CreateListOfRulesJSON(ruleEventArgs.rules, ruleEventArgs.jsonPath);
         }
-        public static ObservableCollection<Rule> loadRules(string path)
+        public static ObservableCollection<Rule> LoadRules(string path)
         {
             string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<ObservableCollection<Rule>>(json);

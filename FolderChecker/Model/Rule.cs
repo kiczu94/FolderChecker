@@ -14,12 +14,12 @@ namespace FolderChecker.Model
         private string _pathToTrack;
         private string _AdressMailString;
         private List<string> _MailAdresses = new List<string>();
-        public long myRuleID
+        public long MyRuleID
         {
             get { return _ruleID; }
             set { _ruleID = value; }
         }
-        public List<string> myMailAdresses
+        public List<string> MyMailAdresses
         {
             get
             {
@@ -27,7 +27,7 @@ namespace FolderChecker.Model
             }
             set { _MailAdresses = value; }
         }
-        public string myPathToTrack
+        public string MyPathToTrack
         {
             get
             {
@@ -39,7 +39,7 @@ namespace FolderChecker.Model
                 OnPropertyChanged();
             }
         }
-        public string myRuleName
+        public string MyRuleName
         {
             get
             {
@@ -56,7 +56,7 @@ namespace FolderChecker.Model
             set
             {
                 _AdressMailString = null;
-                foreach (var adres in myMailAdresses)
+                foreach (var adres in MyMailAdresses)
                 {
                     _AdressMailString += adres + " ";
                 }
@@ -66,7 +66,7 @@ namespace FolderChecker.Model
             {
                 if (_AdressMailString == null)
                 {
-                    foreach (var adres in myMailAdresses)
+                    foreach (var adres in MyMailAdresses)
                     {
                         _AdressMailString += adres + " ";
                     }
@@ -80,17 +80,17 @@ namespace FolderChecker.Model
             _ruleName = name;
             _pathToTrack = pathToTrack;
             _MailAdresses = mailAdresses;
-            myRuleID = GetID();
+            MyRuleID = GetID();
         }
         public Rule(string name, string pathToTrack)
         {
             _ruleName = name;
             _pathToTrack = pathToTrack;
-            myRuleID = GetID();
+            MyRuleID = GetID();
         }
         public Rule()
         {
-            myRuleID = GetID();
+            MyRuleID = GetID();
         }
         public void AddEmailAdress(string emailAdress)
         {

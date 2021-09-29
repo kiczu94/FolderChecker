@@ -48,13 +48,13 @@
                           ColumnHeaderToolTip="Szczegóły reguł">
                         <GridViewColumn
                         Width="100"
-                        DisplayMemberBinding="{Binding Path=myRuleName}" 
+                        DisplayMemberBinding="{Binding Path=MyRuleName}" 
                         >
                             <GridViewColumnHeader Content="Nazwa" MaxWidth="100"></GridViewColumnHeader>
                         </GridViewColumn>
                         <GridViewColumn
                         Width="500"
-                        DisplayMemberBinding="{Binding Path=myPathToTrack}" 
+                        DisplayMemberBinding="{Binding Path=MyPathToTrack}" 
                         Header="Ścieżka"
                             >
                         </GridViewColumn>
@@ -187,7 +187,7 @@
                         Height="30" 
                         Width="200" 
                         Name="pbLogin" 
-                        Value="{Binding isEmailCorrectValue}"/>
+                        Value="{Binding IsEmailCorrectValue}"/>
                 </StackPanel>
             </StackPanel>
 

@@ -33,17 +33,16 @@ namespace FolderChecker.Model
             editSimpleText.ShowDialog();
             MyEmailAdressSender = editSimpleText.GetNewText();
         }
-        public void onWatcherInvoked(object source, WatcherInvokedEventArgs args)
+        public void OnWatcherInvoked(object source, WatcherInvokedEventArgs args)
         {
             if (_password != null && _emailAdress != null)
             {
-                mimeMessages.Add(GetMimeMessage(source, args, CreateText(args)));
+                SendMessage(GetMimeMessage(source, args, CreateText(args)));
             }
             else
             {
                 MessageBox.Show("Nie wysłano maila- brak hasła i maila");
             }
-
         }
         private void SendMessage(MimeMessage message)
         {
@@ -56,6 +55,11 @@ namespace FolderChecker.Model
             }
             catch (Exception ex)
             {
+                /*
+                if (ex.)
+                {
+
+                }*/
                 MessageBox.Show(ex.Message);
             }
             finally
@@ -95,9 +99,9 @@ namespace FolderChecker.Model
             message.From.Add(new MailboxAddress("Folder Checker Bot", "testtkocz1@gmail.com"));
             foreach (var rule in fileWatcher.MyRules)
             {
-                if (args.watcherPath == rule.myPathToTrack)
+                if (args.WatcherPath == rule.MyPathToTrack)
                 {
-                    foreach (var adres in rule.myMailAdresses)
+                    foreach (var adres in rule.MyMailAdresses)
                     {
                         message.To.Add(MailboxAddress.Parse(adres));
                     }

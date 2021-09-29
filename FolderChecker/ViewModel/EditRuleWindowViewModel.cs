@@ -41,9 +41,9 @@ namespace FolderChecker.ViewModel
             set
             {
                 _ruleToEdit = value;
-                MyRuleName = _ruleToEdit.myRuleName;
-                MyMailAdresses = ConvertListToCollection(_ruleToEdit.myMailAdresses);
-                MyRulePath = _ruleToEdit.myPathToTrack;
+                MyRuleName = _ruleToEdit.MyRuleName;
+                MyMailAdresses = ConvertListToCollection(_ruleToEdit.MyMailAdresses);
+                MyRulePath = _ruleToEdit.MyPathToTrack;
             }
         }
         public ObservableCollection<string> MyMailAdresses { get; set; }
@@ -82,9 +82,9 @@ namespace FolderChecker.ViewModel
             addEmailAdressWindow.ShowDialog();
             foreach (var mail in addEmailAdressWindow.Export())
             {
-                MyRuleToEdit.myMailAdresses.Add(mail);
+                MyRuleToEdit.MyMailAdresses.Add(mail);
             }
-            MyMailAdresses = ConvertListToCollection(MyRuleToEdit.myMailAdresses);
+            MyMailAdresses = ConvertListToCollection(MyRuleToEdit.MyMailAdresses);
             OnPropertyChanged("MyMailAdresses");
         }
         private void EditEmail(object choosenMailToEdit)
@@ -96,17 +96,17 @@ namespace FolderChecker.ViewModel
                 {
                     EditSimpleTextWindow editSimpleText = new EditSimpleTextWindow("Nowy adres mail", mailsToEdit[i]);
                     editSimpleText.ShowDialog();
-                    for (int j = 0; j < MyRuleToEdit.myMailAdresses.Count; j++)
+                    for (int j = 0; j < MyRuleToEdit.MyMailAdresses.Count; j++)
                     {
-                        if (MyRuleToEdit.myMailAdresses[j] == editSimpleText.editSimpleTextViewModel.MyOldText)
+                        if (MyRuleToEdit.MyMailAdresses[j] == editSimpleText.editSimpleTextViewModel.MyOldText)
                         {
                             if (editSimpleText.editSimpleTextViewModel.MyNewText == null)
                             {
-                                MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyOldText;
+                                MyRuleToEdit.MyMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyOldText;
                             }
                             else
                             {
-                                MyRuleToEdit.myMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
+                                MyRuleToEdit.MyMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
                                 MyMailAdresses[j] = editSimpleText.editSimpleTextViewModel.MyNewText;
                             }
                         }
@@ -117,8 +117,8 @@ namespace FolderChecker.ViewModel
         }
         public void onClosed(object source, EventArgs args)
         {
-            MyRuleToEdit.myRuleName = MyRuleName;
-            MyRuleToEdit.myPathToTrack = MyRulePath;
+            MyRuleToEdit.MyRuleName = MyRuleName;
+            MyRuleToEdit.MyPathToTrack = MyRulePath;
         }
         public void EditName()
         {
@@ -128,7 +128,7 @@ namespace FolderChecker.ViewModel
         }
         public void EditMail(object choosenMailToEdit)
         {
-            if (MyRuleToEdit.myMailAdresses.Count == 0)
+            if (MyRuleToEdit.MyMailAdresses.Count == 0)
             {
                 AddEmail();
             }

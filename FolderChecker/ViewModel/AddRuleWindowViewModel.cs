@@ -69,8 +69,8 @@ namespace FolderChecker.ViewModel
         }
         public void ChooseFile()
         {
-            _workingRule.myPathToTrack = HelpClass.ChooseFile();
-            MyRulePath = _workingRule.myPathToTrack;
+            _workingRule.MyPathToTrack = HelpClass.ChooseFile();
+            MyRulePath = _workingRule.MyPathToTrack;
         }
         public void AddMail()
         {
@@ -85,11 +85,10 @@ namespace FolderChecker.ViewModel
         }
         public void AddRule()
         {
+            _workingRule.MyMailAdresses = MyEmailAdresses;
+            _workingRule.MyRuleName = MyRuleName;
+            _workingRule.MyPathToTrack = MyRulePath;
             CheckIfAnythingBeneathIsTracked(_workingRule, MyRules);
-            _workingRule.myMailAdresses = MyEmailAdresses;
-            _workingRule.myRuleName = MyRuleName;
-            _workingRule.myPathToTrack = MyRulePath;
-
         }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -109,7 +108,7 @@ namespace FolderChecker.ViewModel
             bool isCorrect = true;
             foreach (var item in rules)
             {
-                if (rule.myPathToTrack.Contains(item.myPathToTrack))
+                if (rule.MyPathToTrack.Contains(item.MyPathToTrack))
                 {
                     return isCorrect = false;
                 }
@@ -125,14 +124,14 @@ namespace FolderChecker.ViewModel
             bool isCorrect = true;
             foreach (var ruleInRuleList in rulesList)
             {
-                if (ruleInRuleList.myPathToTrack.Contains(newRule.myPathToTrack))
+                if (ruleInRuleList.MyPathToTrack.Contains(newRule.MyPathToTrack))
                 {
 
                     foreach (var adress in MyEmailAdressesCollection)
                     {
-                        if (ruleInRuleList.myMailAdresses.Contains(adress))
+                        if (ruleInRuleList.MyMailAdresses.Contains(adress))
                         {
-                            ruleIDtoEdit.Add(ruleInRuleList.myRuleID);
+                            ruleIDtoEdit.Add(ruleInRuleList.MyRuleID);
                             adressesToDelete.Add(adress);
                         }
                     }
