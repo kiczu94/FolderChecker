@@ -37,5 +37,10 @@ namespace FolderChecker.View
         {
             this.Close();
         }
+
+        private void AddMailButton_Click(object sender, RoutedEventArgs e)
+        {
+            editRuleWindowViewModel.AddEmail();
+        }
     }
 }

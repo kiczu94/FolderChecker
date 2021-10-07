@@ -10,16 +10,16 @@ namespace FolderChecker.View
     /// </summary>
     public partial class AddEmailAdressWindow : Window
     {
-        AddEmailAdressViewModel addEmailAdress = new AddEmailAdressViewModel();
+        AddEmailAdressViewModel addEmailAdressViewModel = new AddEmailAdressViewModel();
         public AddEmailAdressWindow()
         {
             InitializeComponent();
-            DataContext = addEmailAdress;
+            DataContext = addEmailAdressViewModel;
         }
 
         private void AddEmail_Click(object sender, RoutedEventArgs e)
         {
-            addEmailAdress.AddEmail();
+            addEmailAdressViewModel.AddEmail();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {            
@@ -27,7 +27,7 @@ namespace FolderChecker.View
         }
         public List<string> Export ()
         {
-            return addEmailAdress.exportEmailAdresses();
+            return addEmailAdressViewModel.exportEmailAdresses();
         }
 
     }

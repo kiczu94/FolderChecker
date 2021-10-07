@@ -79,7 +79,7 @@ namespace FolderChecker.Model
         }
         public void OnChanged(object sender, FileSystemEventArgs e)
         {
-            this.OnWatcherInvoked(new WatcherInvokedEventArgs(e.ChangeType, e.FullPath.Replace(e.Name, string.Empty), e.Name, string.Empty, GetFileSystemWatcher(sender).Path));
+            this.OnWatcherInvoked(new WatcherInvokedEventArgs(e.ChangeType, e.FullPath.Replace(e.Name, string.Empty), e.Name, string.Empty, e.FullPath));
         }
         private void ResetWatchers()
         {
@@ -97,9 +97,9 @@ namespace FolderChecker.Model
             {
                 watcher.EnableRaisingEvents = true;
                 watcher.IncludeSubdirectories = true;
-                watcher.Renamed += OnRenamed;
-                watcher.Created += OnCreated;
-                watcher.Deleted += OnDeleted;
+                //watcher.Renamed += OnRenamed;
+                //watcher.Created += OnCreated;
+                //watcher.Deleted += OnDeleted;
                 watcher.Changed += OnChanged;
             }
         }

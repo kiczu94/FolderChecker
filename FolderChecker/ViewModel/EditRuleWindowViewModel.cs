@@ -76,7 +76,7 @@ namespace FolderChecker.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private void AddEmail()
+        public void AddEmail()
         {
             AddEmailAdressWindow addEmailAdressWindow = new AddEmailAdressWindow();
             addEmailAdressWindow.ShowDialog();

@@ -86,15 +86,28 @@
                     Content="Plik..." 
                     Margin="10,0,0,0" Click="ChooseFile_Click"></Button>
             </WrapPanel>
-            <Button 
+            <WrapPanel
+                HorizontalAlignment="Center">
+                <Button 
                 Margin="10"
-            Grid.Column="3" 
-            Grid.Row="2" 
-            Height="20" 
-            Width="70"
-            Content="Edytuj email" 
-            x:Name="EditButton" Click="EditButton_Click" >
-            </Button>
+                Grid.Column="3" 
+                Grid.Row="2" 
+                Height="20" 
+                Width="70"
+                Content="Edytuj email" 
+                x:Name="EditButton" Click="EditButton_Click" >
+                </Button>
+                <Button
+                    x:Name="AddMailButton"
+                    Click="AddMailButton_Click"
+                    Grid.Column="3" 
+                    Grid.Row="2" 
+                    Height="20" 
+                    Width="70"
+                    Content="Dodaj mail" >
+                </Button>
+            </WrapPanel>
+
         </StackPanel>
 
 

@@ -55,12 +55,16 @@ namespace FolderChecker.Model
             }
             catch (Exception ex)
             {
-                /*
-                if (ex.)
+                //MetadataToken of an exception when adress email is uncorrect
+                if (ex.TargetSite.MetadataToken==100665740|| ex.TargetSite.MetadataToken == 100665727)
                 {
+                    MessageBox.Show($"Adres e-mail {message.To} nieprawidłowy");
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
-                }*/
-                MessageBox.Show(ex.Message);
             }
             finally
             {
