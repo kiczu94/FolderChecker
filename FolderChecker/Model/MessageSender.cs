@@ -12,7 +12,7 @@ namespace FolderChecker.Model
 {
     public class MessageSender
     {
-        private bool alreadyWaiting=false;
+        private bool alreadyWaiting = false;
         private List<MimeMessage> mimeMessages;
         private string _emailAdress;
         private string _password;
@@ -40,7 +40,7 @@ namespace FolderChecker.Model
             if (_password != null && _emailAdress != null)
             {
                 mimeMessages.Add(GetMimeMessage(source, args, CreateText(args)));
-                if (alreadyWaiting==false)
+                if (alreadyWaiting == false)
                 {
                     SendMessages();
                 }
@@ -131,7 +131,6 @@ namespace FolderChecker.Model
         {
             alreadyWaiting = true;
             await Task.Delay(20000);
-
             foreach (var message in mimeMessages)
             {
                 SmtpClient smtp = new SmtpClient();
