@@ -97,10 +97,10 @@ namespace FolderChecker.Model
             {
                 watcher.EnableRaisingEvents = true;
                 watcher.IncludeSubdirectories = true;
-                //watcher.Renamed += OnRenamed;
-                //watcher.Created += OnCreated;
-                //watcher.Deleted += OnDeleted;
-                watcher.Changed += OnChanged;
+                watcher.Renamed += OnRenamed;
+                watcher.Created += OnCreated;
+                watcher.Deleted += OnDeleted;
+                //watcher.Changed += OnChanged;
             }
         }
         private FileSystemWatcher GetFileSystemWatcher(object sender)

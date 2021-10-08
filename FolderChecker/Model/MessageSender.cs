@@ -12,8 +12,10 @@ namespace FolderChecker.Model
 {
     public class MessageSender
     {
+        private List<MimeMessage> mimeMessagesViaAdress = new List<MimeMessage>();
         private bool alreadyWaiting = false;
         private List<MimeMessage> mimeMessages;
+        private List<string> emailAdresses;
         private string _emailAdress;
         private string _password;
         public string MyEmailAdressSender
@@ -28,6 +30,7 @@ namespace FolderChecker.Model
         public MessageSender()
         {
             mimeMessages = new List<MimeMessage>();
+            emailAdresses = new List<string>();
         }
         public void GetEmailAdress()
         {
@@ -37,9 +40,10 @@ namespace FolderChecker.Model
         }
         public void OnWatcherInvoked(object source, WatcherInvokedEventArgs args)
         {
+            GetMimeMessage(source, args, CreateText(args));
+            
             if (_password != null && _emailAdress != null)
             {
-                mimeMessages.Add(GetMimeMessage(source, args, CreateText(args)));
                 if (alreadyWaiting == false)
                 {
                     SendMessages();
@@ -75,27 +79,47 @@ namespace FolderChecker.Model
             string text = args.FullPath.Remove(args.FullPath.LastIndexOf('\\'), args.FullPath.Length - args.FullPath.LastIndexOf('\\'));
             return text;
         }
-        private MimeMessage GetMimeMessage(object source, WatcherInvokedEventArgs args, string textToSend)
+        private void GetMimeMessage(object source, WatcherInvokedEventArgs args, string textToSend)
         {
             FileWatcher fileWatcher = GetFileWatcher(source);
-            MimeMessage message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Folder Checker Bot", "testtkocz1@gmail.com"));
             foreach (var rule in fileWatcher.MyRules)
             {
                 if (args.WatcherPath == rule.MyPathToTrack)
                 {
                     foreach (var adres in rule.MyMailAdresses)
                     {
-                        message.To.Add(MailboxAddress.Parse(adres));
+                        if (!emailAdresses.Contains(adres))
+                        {
+                            MimeMessage mimeMessage = new MimeMessage();
+                            emailAdresses.Add(adres);
+                            mimeMessage.To.Add(MailboxAddress.Parse(adres));
+                            mimeMessage.From.Add(new MailboxAddress("Folder Checker Bot", "testtkocz1@gmail.com"));
+                            mimeMessage.Body = new TextPart("plain")
+                            {
+                                Text = textToSend
+                            };
+                            mimeMessagesViaAdress.Add(mimeMessage);
+                        }
+                        else
+                        {
+                            foreach (var message in mimeMessagesViaAdress)
+                            {
+                                if (message.To.ToString()==adres)
+                                {
+                                    string helper = message.TextBody;
+                                    helper += Environment.NewLine;
+                                    helper += textToSend;
+                                    message.Body = new TextPart("plain")
+                                    {
+                                        Text = helper
+                                    };
+                                }
+                            }
+                        }
+
                     }
                 }
             }
-            message.Subject = "Folder updated";
-            message.Body = new TextPart("plain")
-            {
-                Text = textToSend
-            };
-            return message;
         }
         private FileWatcher GetFileWatcher(object source)
         {
@@ -130,8 +154,10 @@ namespace FolderChecker.Model
         public async void SendMessages()
         {
             alreadyWaiting = true;
+            CreateListOfEmail();
             await Task.Delay(20000);
-            foreach (var message in mimeMessages)
+            
+            foreach (var message in mimeMessagesViaAdress)
             {
                 SmtpClient smtp = new SmtpClient();
                 try
@@ -158,11 +184,12 @@ namespace FolderChecker.Model
                     smtp.Dispose();
                 }
             }
-            mimeMessages.Clear();
+            alreadyWaiting = false;
+            emailAdresses.Clear();
+            mimeMessagesViaAdress.Clear();
         }
         private void CreateListOfEmail()
         {
-            List<string> emailAdresses = new List<string>();
             foreach (var message in mimeMessages)
             {
                 foreach (var emailAdress in message.To)
